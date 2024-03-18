@@ -8,6 +8,8 @@ IshanAcharya_T2A2 - API Webserver Project
 
 # R4. Identify and discuss the key functionalities and benefits of an ORM.
 
+- On Ed lesson for ORM Pros and Cons
+
 # R5. Document all endpoints for your API.
 
 # R6. An ERD for your app.
