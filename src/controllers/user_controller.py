@@ -15,7 +15,7 @@ def create_user():
     if not username or not email or not password:
         return jsonify({'message': 'Username, email and password are required!'}), 400
 
-    # Conducted check for whether user already exists
+    # Conduct check for whether user already exists
     existing_user = User.query.filter_by(email=email).first()
     if existing_user:
         return jsonify({'message': 'User already exists!'}), 400
@@ -31,6 +31,7 @@ def create_user():
 
         return jsonify({'message': 'User created successfully!'}), 201
     except Exception as e:
+        # Rollback if error present
         db.session.rollback()
         return jsonify({'message': 'Failed to create user', 'error': str(e)}), 500
 

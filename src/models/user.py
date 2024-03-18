@@ -11,5 +11,5 @@ class User(db.Model):
 
 
 # Define relationships with other models
-    purchases = db.relationship('Purchase', backref='user', lazy=True)
-    alerts = db.relationship('Alert', backref='user', lazy=True)
+    purchase = db.relationship('Purchase', backref='user', lazy=True)
+    alert = db.relationship('Alert', backref='user', lazy=True)
