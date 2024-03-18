@@ -8,7 +8,6 @@ def create_purchase(user_id, product_id, store_id, price, purchase_date, promoti
         # Conduct check to ensure that the price is positive
         if price <= 0:
             return jsonify({'message': 'Price must be a positive value'}), 400
-        
         # Create new purchase object
         new_purchase = Purchase(user_id=user_id, product_id=product_id, store_id=store_id, price=price, purchase_date=purchase_date, promotion_id=promotion_id)
         # Add new purchase to database

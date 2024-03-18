@@ -1,7 +1,7 @@
 from src.models import db
 
 class Purchase(db.model):
-    __tablename__ = 'purchases'
+    __tablename__ = 'purchase'
 
 id = db.Column(db.Integer, primary_key=True)
 user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
