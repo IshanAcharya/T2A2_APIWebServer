@@ -21,7 +21,6 @@ def create_user():
         return jsonify({'message': 'User already exists!'}), 400
     
     try:
-
         # Create new user 
         new_user = User(username=username, email=email, password=password)
 

@@ -1,8 +1,10 @@
 from src.models import db
 
 class Promotion(db.Model):
+    # Define table name for the model
     __tablename__ = 'promotion'
 
+    # Define columns for the model
     id = db.Column(db.Integer, primary_key=True)
     purchase_id = db.Column(db.Integer, db.ForeignKey('purchase.id'))
     promotion_type = db.Column(db.String(50), nullable=False)

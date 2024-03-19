@@ -1,9 +1,10 @@
 from src.models import db
 
 class User(db.Model):
+    # Define table name for the model
     __tablename__ = 'users'
 
-
+    # Define columns for the model
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
