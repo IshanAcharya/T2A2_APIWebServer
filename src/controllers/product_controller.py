@@ -1,9 +1,18 @@
-from flask import jsonify
+from flask import Blueprint, jsonify, request
 from src.models import db
 from src.models.product import Product
 
+# Create blueprint for product controller
+product_bp = Blueprint('product', __name__)
+
 # Function to create a new product
-def create_product(name, brand, category):
+@product_bp.route('/product', methods=['POST'])
+def create_product():
+    data = request.json
+    name = data.get('name')
+    brand = data.get('brand')
+    category = data.get('category')
+
     try:
         # Validate input data
         if not name or not brand or not category:
@@ -23,7 +32,8 @@ def create_product(name, brand, category):
         db.session.rollback()
         return jsonify({'message': 'Failed to create product', 'error': str(e)}), 500
     
-# Function to retrieve product information
+# Function to retrieve product by ID
+@product_bp.route('/product/<int:product_id>', methods=['GET'])
 def get_product(product_id):
     # Query database for product with specified ID
     product = Product.query.get(product_id)
@@ -34,13 +44,16 @@ def get_product(product_id):
         # Return error message if product not found
         return jsonify({'message': 'Product not found'}), 404
     
-def update_product(product_id, new_data):
+# Function to update product by ID
+@product_bp.route('/product/<int:product_id>', methods=['PUT'])
+def update_product(product_id):
+    data = request.json
     # Query database for product with specified ID
     product = Product.query.get(product_id)
     if product:
         try:
             # Update product attributes with new data
-            for key, value in new_data.items():
+            for key, value in data.items():
                 setattr(product, key, value)
             # Commit session
             db.session.commit()
@@ -50,6 +63,8 @@ def update_product(product_id, new_data):
             db.session.rollback()
             return jsonify({'message': 'Failed to update product', 'error': str(e)}), 500
 
+# Function to delete product by ID
+@product_bp.route('/product/<int:product_id>', methods=['DELETE'])
 def delete_product(product_id):
     # Query database for product with specified ID
     product = Product.query.get(product_id)

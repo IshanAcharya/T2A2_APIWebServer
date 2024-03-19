@@ -1,9 +1,18 @@
-from flask import jsonify
+from flask import Blueprint, jsonify, request
 from src.models import db
 from src.models.alert import Alert
 
+# Create blueprint for alert controller
+alert_bp = Blueprint('alert', __name__)
+
 # Function to create an alert
-def create_alert(user_id, product_id, day_of_week):
+@alert_bp.route('/alert', methods=['POST'])
+def create_alert():
+    data = request.json
+    user_id = data.get('user_id')
+    product_id = data.get('product_id')
+    day_of_week = data.get('day_of_week')
+
     try:
         # Create new alert object
         new_alert = Alert(user_id=user_id, product_id=product_id, day_of_week=day_of_week)
@@ -20,6 +29,7 @@ def create_alert(user_id, product_id, day_of_week):
         return jsonify({'message': 'Failed to create an alert', 'error': str(e)}), 500
 
 # Function to get an alert by its ID
+@alert_bp.route('/alert/<int:alert_id>', methods=['GET'])
 def get_alert(alert_id):
     # Query database for alert with specified ID
     alert = Alert.query.get(alert_id)
@@ -30,14 +40,16 @@ def get_alert(alert_id):
         # Return error message if alert not found
         return jsonify({'message': 'Alert not found'}), 404
 
-# Function to update an alert
-def update_alert(alert_id, new_data):
+# Function to update an alert by its ID
+@alert_bp.route('/alert/<int:alert_id>', methods=['PUT'])
+def update_alert(alert_id):
+    data = request.json
     # Query database for alert with specified ID
     alert = Alert.query.get(alert_id)
     if alert:
         try:
             # Update alert attributes with new data
-            for key, value in new_data.items():
+            for key, value in data.items():
                 setattr(alert, key, value)
             db.session.commit()
             # Return success message
@@ -50,7 +62,8 @@ def update_alert(alert_id, new_data):
         # Return message if alert not found
         return jsonify({'message': 'Alert not found'}), 404
 
-# Function to delete an alert
+# Function to delete an alert by its ID
+@alert_bp.route('/alert/<int:alert_id>', methods=['DELETE'])
 def delete_alert(alert_id):
     # Query database for alert with specified ID
     alert = Alert.query.get(alert_id)

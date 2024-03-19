@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify, request
 from src.models import db
 from src.models.user import User
 from bcrypt import hashpw, gensalt, checkpw
@@ -7,12 +7,8 @@ from flask_jwt_extended import create_access_token
 # Create blueprint for auth controller
 auth_bp = Blueprint('auth', __name__)
 
-# Define route for user registration
-
-@auth_bp.route('/register', methods=['POST'])
-
 # Function to register a new user
-
+@auth_bp.route('/register', methods=['POST'])
 def register_user():
     # Obtain user data
     data = request.json

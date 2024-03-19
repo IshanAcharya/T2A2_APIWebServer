@@ -1,7 +1,13 @@
-from flask import request, jsonify
+from flask import Blueprint, request, jsonify
 from src.models import db
 from src.models.user import User
 
+# Create blueprint for user controller
+
+user_bp = Blueprint('user', __name__)
+
+# Function to create a new user
+@user_bp.route('/user', methods=['POST'])
 def create_user():
     # Obtain user data
     data = request.json
@@ -30,10 +36,12 @@ def create_user():
 
         return jsonify({'message': 'User created successfully!'}), 201
     except Exception as e:
-        # Rollback if error present
+        # Rollback and return error message if error present
         db.session.rollback()
         return jsonify({'message': 'Failed to create user', 'error': str(e)}), 500
 
+# Function to retrieve a user by ID
+@user_bp.route('/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     # Retrieve user from databased
     user = User.query.get(user_id)
@@ -50,3 +58,53 @@ def get_user(user_id):
 
     return jsonify(user_data), 200
 
+# Function to update a user by ID
+@user_bp.route('/user/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    # Obtain user data from requeust
+    data = request.json
+
+    # Retrieve user to update
+    user = User.query.get(user_id)
+
+    # Conduct check to see if user already exists
+    if not user: 
+        return jsonify({'message': 'User not found'}), 404
+    
+    # Update user details
+    if 'username' in data:
+        user.username = data['username']
+    if 'email' in data:
+        user.email = data['email']
+    if 'password' in data:
+        user.password = data['password']
+    
+    try: 
+        db.session.commit()
+        # Return message if user updated
+        return jsonify({'message': 'User updated successfully!'}), 200
+    except Exception as e:
+        # Rollback and return error message if error present
+        db.session.rollback()
+        return jsonify ({'message': 'Failed to update user', 'error': str(e)}), 500
+
+# Function to delete a user by ID
+@user_bp.route('/user/<int:user_id>', methods=['DELETE'])        
+def delete_user(user_id):
+    # Retrieve user to delete
+    user = User.query.get(user_id)
+
+    # Conduct check to see if user already exists
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+    
+    try: 
+        # Delete user from database
+        db.session.delete(user)
+        db.session.commit()
+        # Return message if user deleted
+        return jsonify({'message': 'User deleted successfully!'}), 200
+    except Exception as e:
+        # Rollback and return error message if error present 
+        db.session.rollback()
+        return jsonify({'message': 'Failed to delete user', 'error': str (e)}), 500

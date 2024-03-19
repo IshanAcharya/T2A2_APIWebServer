@@ -1,9 +1,18 @@
-from flask import jsonify
+from flask import Blueprint, jsonify, request
 from src.models import db
 from src.models.promotion import Promotion
 
-# Function to create new promotion
-def create_promotion(product_id, promotion_type, promotion_discount):
+# Create blueprint for promotion controller
+promotion_bp = Blueprint('promotion', __name__)
+
+# Function to create a promotion
+@promotion_bp.route('/promotion', methods=['POST'])
+def create_promotion():
+    data = request.json
+    product_id = data.get('product_id')
+    promotion_type = data.get('promotion_type')
+    promotion_discount = data.get('promotion_discount')
+
     try: 
         # Create new promotion object
         new_promotion = Promotion(product_id=product_id, promotion_type=promotion_type, promotion_discount=promotion_discount)
@@ -19,6 +28,8 @@ def create_promotion(product_id, promotion_type, promotion_discount):
         db.session.rollback()
         return jsonify({'message': 'Failed to create a promotion', 'error': str(e)}), 500
 
+# Function to retrieve a promotion by ID 
+@promotion_bp.route('/promotion/<int:promotion_id>', methods=['GET'])
 def get_promotion(promotion_id):
     # Query database for promotion with the specified ID
     promotion = Promotion.query.get(promotion_id)
@@ -29,7 +40,10 @@ def get_promotion(promotion_id):
         # Return error messsage if promotion not found
         return jsonify({'message': 'Promotion not found'}), 404
 
+# Function to update a promotion by ID
+@promotion_bp.route('/promotion/<int:promotion_id>', methods=['PUT'])
 def update_promotion(promotion_id, new_data):
+    data = request.json
     # Query database for promotion with the specified ID
     promotion = Promotion.query.get(promotion_id)
     if promotion:
@@ -49,7 +63,8 @@ def update_promotion(promotion_id, new_data):
         # Return error message if promotion not found
         return jsonify({'message': 'Promotion not found'}), 404
 
-
+# Function to delete promotion by ID
+@promotion_bp.route('/promotion/<int:promotion_id>', methods=['DELETE'])
 def delete_promotion(promotion_id):
     # Query database for promotion with the specified ID
     promotion = Promotion.query.get(promotion_id)

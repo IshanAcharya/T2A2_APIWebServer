@@ -1,9 +1,19 @@
-from flask import jsonify
+from flask import Blueprint, jsonify, request
 from src.models import db
 from src.models.store import Store
 
+# Create blueprint for store controller
+store_bp = Blueprint('store', __name__)
+
 # Function to create a new store
-def create_store(name, type, location):
+@store_bp.route('/store', methods=['POST'])
+def create_store():
+    data = request.json
+
+    name = data.get('name')
+    type = data.get('type')
+    location = data.get('location')
+
     try:
         # Create new store object
         new_store = Store(name=name, type=type, location=location)
@@ -20,6 +30,7 @@ def create_store(name, type, location):
         return jsonify({'message': 'Failed to create a store', 'error': str(e)}), 500
     
 # Function to get a store by its ID
+@store_bp.route('/store/<int:store_id>', methods=['GET'])
 def get_store(store_id):
     # Query database for store with specified ID
     store = Store.query.get(store_id)
@@ -31,8 +42,10 @@ def get_store(store_id):
         return jsonify({'message': 'Store not found'}), 404
 
 # Function to update a store
+@store_bp.route('/store/<int:store_id>', methods=['PUT'])
 def update_store(store_id, new_data):
     # Query database for store with specified ID
+    data = request.json
     store = Store.query.get(store_id)
     if store:
         try:

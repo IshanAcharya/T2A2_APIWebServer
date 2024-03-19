@@ -1,9 +1,21 @@
-from flask import jsonify
+from flask import Blueprint, jsonify, request
 from src.models import db
 from src.models.purchase import Purchase
 
+# Create blueprint for purchase controller
+purchase_bp = Blueprint('purchase', __name__)
+
 # Function to create a purchase
-def create_purchase(user_id, product_id, store_id, price, purchase_date, promotion_id=None):
+@purchase_bp.route('/purchase', methods=['POST'])
+def create_purchase():
+    data = request.json
+    user_id = data.get('user_id')
+    product_id = data.get('product_id')
+    store_id = data.get('store_id')
+    price = data.get('price')
+    purchase_date = data.get('purchase_date')
+    promotion_id = data.get('promotion_id', None)
+
     try:
         # Conduct check to ensure that the price is positive
         if price <= 0:
@@ -20,7 +32,8 @@ def create_purchase(user_id, product_id, store_id, price, purchase_date, promoti
         db.session.rollback()
         return jsonify({'message': 'Failed to created a purchase', 'error': str(e)}), 500
     
-# Function to retrieve a purchase by ID    
+# Function to retrieve a purchase by ID
+@purchase_bp.route('/purchase/<int:purchase_id>', methods=['GET'])    
 def get_purchase(purchase_id):
     # Query database for purchase with specified ID
     purchase = Purchase.query.get(purchase_id)
@@ -30,8 +43,10 @@ def get_purchase(purchase_id):
     else:
         return jsonify({'message': 'Purchase not found'}), 404
 
-# Function to update a purchase
+# Function to update a purchase by ID
+@purchase_bp.route('/purchase/<int:purchase_id>', methods=['PUT'])     
 def update_purchase(purchase_id, new_data):
+    data = request.json
     # Query database for the purchase with the specified ID
     purchase = Purchase.query.get(purchase_id)
     if purchase:
@@ -48,7 +63,8 @@ def update_purchase(purchase_id, new_data):
     else: 
         return jsonify({'message': 'Purchase not found'}), 404
 
-# Function to delete a purchase    
+# Function to delete a purchase by ID
+@purchase_bp.route('/purchase/<int:purchase_id>', methods=['DELETE']) 
 def delete_purchase(purchase_id):
     # Query database for the purchase with the specified ID
     purchase = Purchase.query.get(purchase_id)
