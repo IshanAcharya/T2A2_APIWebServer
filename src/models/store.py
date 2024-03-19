@@ -1,4 +1,5 @@
 from src.models import db
+from marshmallow import Schema, fields
 
 class Store(db.Model):
     # Define table name for the model
@@ -20,3 +21,10 @@ class Store(db.Model):
             'type': self.type,
             'location': self.location
         }
+    
+
+class StoreSchema(Schema):
+    id = fields.Int(dump_only=True)
+    name = fields.Str(required=True)
+    type = fields.Str(required=True)
+    location = fields.Str(required=True)

@@ -1,4 +1,5 @@
 from src.models import db
+from marshmallow import Schema, fields
 
 class Product(db.Model):
     # Define table name for the model
@@ -40,4 +41,10 @@ class Product(db.Model):
         db.session.add(new_product)
         db.session.commit()
         return new_product
+    
+class ProductSchema(Schema):
+    id = fields.Int(dump_only=True)
+    product_name = fields.Str(required=True)
+    product_brand = fields.Str(required=True)
+    product_category = fields.Str(required=True)
     

@@ -1,4 +1,5 @@
 from src.models import db
+from marshmallow import Schema, fields
 
 class Alert(db.Model):
     # Define table name for the model
@@ -21,3 +22,9 @@ class Alert(db.Model):
             'product_id': self.product_id,
             'day_of_week': self.day_of_week
         }
+    
+class AlertSchema(Schema):
+    id = fields.Int(dump_only=True)
+    user_id = fields.Int(required=True)
+    product_id = fields.Int(required=True)
+    day_of_week = fields.Str(required=True)

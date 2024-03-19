@@ -1,4 +1,5 @@
 from src.models import db
+from marshmallow import Schema, fields, validates, ValidationError
 
 class User(db.Model):
     # Define table name for the model
@@ -14,3 +15,16 @@ class User(db.Model):
 # Define relationships with other models
     purchase = db.relationship('Purchase', backref='user', lazy=True)
     alert = db.relationship('Alert', backref='user', lazy=True)
+
+
+class UserSchema(Schema):
+    id = fields.Integer(dump_only=True)
+    username = fields.String(required=True)
+    email = fields.Email(required=True)
+    password = fields.String(required=True, load_only=True)
+
+    @validates('password')
+    def validate_password(self, value):
+        if len(value) <8:
+            raise ValidationError('Password must be at least 8 characters long.')
+

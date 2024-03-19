@@ -1,4 +1,5 @@
 from src.models import db
+from marshmallow import Schema, fields
 
 class Purchase(db.model):
     # Define table name for the model
@@ -29,3 +30,12 @@ class Purchase(db.model):
             'price': self.price,
             'purchase_date': self.purchase_date.strftime('%D-%m-%y %H:%M:%S')
         }
+    
+class PurchaseSchema(Schema):
+    id = fields.int(dump_only=True)
+    user_id = fields.Int(required=True)
+    product_id = fields.Int(required=True)
+    store_id = fields.Int(required=True)
+    promotion_id = fields.Int()
+    price = fields.Float(required=True)
+    purchase_date = fields.DateTime(required=True)
