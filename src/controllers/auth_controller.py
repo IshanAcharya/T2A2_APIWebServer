@@ -45,6 +45,7 @@ def generate_password_hash(password):
     return hashed_password.decode('utf-8')
 
 # Function to log in a user
+
 def login_user():
     data = request.json
     email = data.get('email')
