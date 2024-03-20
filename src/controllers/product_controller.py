@@ -17,7 +17,16 @@ def create_product():
     try:
         # Validate input data
         if not name or not brand or not category:
-            return jsonify({'message': 'Name, brand and category are required fields!'}), 400
+            raise ValidationError('Name, brand and category are required fields!')
+        
+        # Check for duplicate product names
+        existing_product = Product.query.filter_by(name=name).first()
+        if existing_product:
+            raise ValidationError('Product name already exists!')
+        
+        # Validate category to be alphabetical only
+        if not category.isalphaa():
+            raise ValidationError('Category must be alphabetical only')
         
         # Create new product object
         new_product = Product(name=name, brand=brand, category=category)
