@@ -2,10 +2,10 @@ from flask import Blueprint, jsonify, request
 from src.models import db
 from src.models.user import User
 from bcrypt import hashpw, gensalt, checkpw
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 # Create blueprint for auth controller
-auth_bp = Blueprint('auth', __name__)
+auth_bp = Blueprint('auth', __name__, url_prefix="/auth")
 
 # Function to register a new user
 @auth_bp.route('/register', methods=['POST'])
@@ -45,7 +45,7 @@ def generate_password_hash(password):
     return hashed_password.decode('utf-8')
 
 # Function to log in a user
-
+@auth_bp.route('/login', methods=['POST'])
 def login_user():
     data = request.json
     email = data.get('email')
@@ -66,3 +66,10 @@ def login_user():
     access_token = create_access_token(identity=user.id)
     # Return access token
     return jsonify({'access_token': access_token}), 200
+
+# Function to authenticate a user
+@auth_bp.route('/protected', methods=['GET', 'POST'])
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200

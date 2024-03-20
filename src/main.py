@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from marshmallow.exceptions import ValidationError
 from dotenv import load_dotenv
 from init import db, ma, bcrypt, jwt
@@ -10,7 +9,6 @@ def create_app():
     app.json.sort_keys = False
     
     # Load environment variables from .env
-    from dotenv import load_dotenv
 
     load_dotenv()
 
@@ -64,10 +62,3 @@ def create_app():
     app.register_blueprint(alert_bp)
 
     return app
-
-# Define route for authentication
-@app.route('/protected')
-@jwt_required()
-def protected():
-    current_user = get_jwt_identity()
-    return jsonify(logged_in_as=current_user), 200
