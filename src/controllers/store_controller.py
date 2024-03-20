@@ -15,6 +15,26 @@ def create_store():
     type = data.get('type')
     location = data.get('location')
 
+    # Validate data
+
+    if 'name' not in data:
+        raise ValidationError('Store name is required')
+    if 'type' not in data:
+        raise ValidationError('Store type is required')
+    if 'location' not in data:
+        raise ValidationError('Store location is required')
+    
+    # Validate type field
+    if not isinstance(type, str):
+        raise ValidationError('Type must be a string')
+    if any(char.isdigit() for char in type):
+        raise ValidationError('Type cannot contain numbers')
+    
+    # Check if store with same name already exists
+    existing_store = Store.query.filter_by(name=name).first()
+    if existing_store: 
+        return jsonify({'message': 'Store with the same name already exists!'}), 400
+
     try:
         # Create new store object
         new_store = Store(name=name, type=type, location=location)
