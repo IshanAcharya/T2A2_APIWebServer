@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from src.models import db
 from src.models.promotion import Promotion
+from marshmallow import ValidationError
 
 # Create blueprint for promotion controller
 promotion_bp = Blueprint('promotion', __name__)

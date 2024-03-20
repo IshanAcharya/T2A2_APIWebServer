@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from src.models import db
 from src.models.store import Store
+from marshmallow import ValidationError
 
 # Create blueprint for store controller
 store_bp = Blueprint('store', __name__)

@@ -31,11 +31,15 @@ def create_app():
 
     @app.errorhandler(400)
     def bad_request(error):
-        return{"error": str(err)}, 400
+        return{"error": str(error)}, 400
     
     @app.errorhandler(404)
     def not_found(error):
-        return{"error": str(err)}, 404
+        return{"error": str(error)}, 404
+    
+    @app.errorhandler(500)
+    def internal_server_error(error):
+        return{"error": str(error)}, 500
     
     @app.errorhandler(ValidationError)
     def validation_error(error):

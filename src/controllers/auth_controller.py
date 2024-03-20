@@ -3,6 +3,7 @@ from src.models import db
 from src.models.user import User
 from bcrypt import hashpw, gensalt, checkpw
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from marshmallow import ValidationError
 
 # Create blueprint for auth controller
 auth_bp = Blueprint('auth', __name__, url_prefix="/auth")

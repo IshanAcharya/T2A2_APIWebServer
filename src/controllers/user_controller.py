@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from src.models import db
 from src.models.user import User
+from marshmallow import ValidationError
 
 # Create blueprint for user controller
 
@@ -16,6 +17,24 @@ def create_user():
     username = data.get('username')
     email = data.get('email')
     password = data.get('password')
+
+    # Validation for username
+    if not data.get('username'):
+        raise ValidationError('Username is required')
+    
+    # Validation for email format
+    if not email or '@' not in email or '.' not in email.split('@')[1]: 
+        raise ValidationError('Invalid email format')
+    
+    # Validation for password strength
+    if not password: 
+        raise ValidationError('Password is required')
+    elif len(password) < 8:
+        raise ValidationError('Password must be at least 8 characters long')
+    elif not any(char.isdigit() for char in password):
+        raise ValidationError('Password must contain at least one digit')
+    elif not any(char.isalpha() for char in password):
+        raise ValidationError('Password must contain at least one letter')
 
     # Conduct check for whether username and email are provided or not
     if not username or not email or not password:
@@ -75,8 +94,20 @@ def update_user(user_id):
     if 'username' in data:
         user.username = data['username']
     if 'email' in data:
+        email = data['email']
+        if not email or '@' not in email or '.' not in email.split('@')[1]: 
+            raise ValidationError('Invalid email format')
         user.email = data['email']
     if 'password' in data:
+        password = data['password']
+        if not password:
+            return jsonify({'message': 'Password is required'}), 400
+        elif len(password) < 8:
+            raise ValidationError('Password must be at least 8 characters long')
+        elif not any(char.isdigit() for char in password):
+            raise ValidationError('Password must contain at least one digit')
+        elif not any(char.isalpha() for char in password):
+            raise ValidationError('Password must contain at least one letter')
         user.password = data['password']
     
     try: 
