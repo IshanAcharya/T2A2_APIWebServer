@@ -20,12 +20,26 @@ def create_app():
     app.config['JWT_REFRESH_TOKEN_EXPIRES'] = 60 * 60 * 24 * 30 # Refresh token expires in 30 days
     app.config['JWT_TOKEN_LOCATION'] = ['headers', 'cookies'] # Identifies where JWT tokens are located
 
-    # Connect libraries with flask app
+    # Connect libraries from init.py with flask app
 
     db.init_app(app)
     ma.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
+
+    # Global error handling for entire application
+
+    @app.errorhandler(400)
+    def bad_request(error):
+        return{"error": str(err)}, 400
+    
+    @app.errorhandler(404)
+    def not_found(error):
+        return{"error": str(err)}, 404
+    
+    @app.errorhandler(ValidationError)
+    def validation_error(error):
+        return{"error": error.messages}, 400
 
     # Register Blueprint controllers
 
