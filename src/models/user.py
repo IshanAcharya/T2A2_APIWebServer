@@ -3,7 +3,7 @@ from marshmallow import Schema, fields, validates, ValidationError
 
 class User(db.Model):
     # Define table name for the model
-    __tablename__ = 'users'
+    __tablename__ = 'user'
 
     # Define columns for the model
     id = db.Column(db.Integer, primary_key=True)
