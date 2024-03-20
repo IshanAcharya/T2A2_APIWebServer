@@ -24,6 +24,8 @@ def create_alert():
 
         # Return success message with ID of newly created alert
         return jsonify({'message': 'Alert created successfully!', 'alert_id': new_alert.id}), 201
+    except ValidationError as ve:
+        return jsonify({'message': 'Validation error', 'error': ve.messages}), 400
     except Exception as e:
         # Rollback and return error message if error present
         db.session.rollback()
@@ -55,6 +57,8 @@ def update_alert(alert_id):
             db.session.commit()
             # Return success message
             return jsonify({'message': 'Alert updated successfully!'}), 200
+        except ValidationError as ve:
+            return jsonify({'message': 'Validation error', 'error': ve.messages}), 400
         except Exception as e:
             # Rollback and return error message if error present
             db.session.rollback()
