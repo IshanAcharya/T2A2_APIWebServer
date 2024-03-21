@@ -19,25 +19,36 @@ def register_user():
     email = data.get('email')
     password = data.get('password')
 
-    # Conduct check for whether username and email are provided or not
-    if not username or not email or not password:
-        return jsonify({'message': 'Username, email and password are required!'}), 400
+    try:
+        # Validate input data
+        if not username:
+            raise ValidationError('Username is required')
+        if not email:
+            raise ValidationError('Email is required')
+        if not password:
+            raise ValidationError('Password is required')
 
-    # Conduct check for whether user already exists
-    existing_user = User.query.filter_by(email=email).first()
-    if existing_user:
-        return jsonify({'message': 'User already exists!'}), 400
+        # Conduct check for whether user already exists
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            return jsonify({'message': 'User already exists!'}), 400
     
-    # Hash password using bcrypt
-    hashed_password = generate_password_hash(password)
-    # Create new user
-    new_user = User(username=username, email=email, password=hashed_password)
+        # Hash password using bcrypt
+        hashed_password = generate_password_hash(password)
+        # Create new user
+        new_user = User(username=username, email=email, password=hashed_password)
 
-    # Add new user to database 
-    db.session.add(new_user)
-    db.session.commit()
+        # Add new user to database 
+        db.session.add(new_user)
+        db.session.commit()
 
-    return jsonify({'message': 'User registered successfully!'}), 201
+        return jsonify({'message': 'User registered successfully!'}), 201
+    except ValidationError as e:
+        return jsonify({'message': 'Validation Error', 'error': str(e)}), 400
+    except Exception as e:
+        # Rollback and return error message if error present
+        db.session.rollback()
+        return jsonify({'message': 'Failed to register user', 'error': str(e)}), 500
 
 # Function to generate password using bcrypt
 def generate_password_hash(password):
@@ -52,9 +63,11 @@ def login_user():
     email = data.get('email')
     password = data.get('password')
 
-    # Conduct check for whether email and password are provided
-    if not email or not password:
-        return jsonify ({'message': 'Email and password are required!'}), 400
+    # Validate input data
+    if not email:
+        raise ValidationError('Email is required')
+    if not password: 
+        raise ValidationError('Password is required')
 
     # Query database for user 
     user = User.query.filter_by(email=email).first()
