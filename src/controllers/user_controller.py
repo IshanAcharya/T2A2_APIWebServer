@@ -5,9 +5,10 @@ from marshmallow import ValidationError
 
 # Create blueprint for user controller
 
-user_bp = Blueprint('user', __name__)
+user_bp = Blueprint('user', __name__, url_prefix="/user")
 
 # Function to create a new user
+# http://localhost:8080/users - POST
 @user_bp.route('/user', methods=['POST'])
 def create_user():
     # Obtain user data
@@ -60,6 +61,7 @@ def create_user():
         return jsonify({'message': 'Failed to create user', 'error': str(e)}), 500
 
 # Function to retrieve a user by ID
+# http://localhost:8080/users/id - GET
 @user_bp.route('/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     # Retrieve user from databased
@@ -78,6 +80,7 @@ def get_user(user_id):
     return jsonify(user_data), 200
 
 # Function to update a user by ID
+# http://localhost:8080/users/id - PUT
 @user_bp.route('/user/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     # Obtain user data from requeust
@@ -120,6 +123,7 @@ def update_user(user_id):
         return jsonify ({'message': 'Failed to update user', 'error': str(e)}), 500
 
 # Function to delete a user by ID
+# http://localhost:8080/users/id - DELETE
 @user_bp.route('/user/<int:user_id>', methods=['DELETE'])        
 def delete_user(user_id):
     # Retrieve user to delete

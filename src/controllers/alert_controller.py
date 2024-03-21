@@ -4,9 +4,10 @@ from src.models.alert import Alert
 from marshmallow import ValidationError
 
 # Create blueprint for alert controller
-alert_bp = Blueprint('alert', __name__)
+alert_bp = Blueprint('alert', __name__, url_prefix="/alert")
 
 # Function to create an alert
+# http://localhost:8080/alerts - POST
 @alert_bp.route('/alert', methods=['POST'])
 def create_alert():
     data = request.json
@@ -32,6 +33,7 @@ def create_alert():
         return jsonify({'message': 'Failed to create an alert', 'error': str(e)}), 500
 
 # Function to get an alert by its ID
+# http://localhost:8080/alerts/id - GET
 @alert_bp.route('/alert/<int:alert_id>', methods=['GET'])
 def get_alert(alert_id):
     # Query database for alert with specified ID
@@ -44,6 +46,7 @@ def get_alert(alert_id):
         return jsonify({'message': 'Alert not found'}), 404
 
 # Function to update an alert by its ID
+# http://localhost:8080/alerts/id - PUT
 @alert_bp.route('/alert/<int:alert_id>', methods=['PUT'])
 def update_alert(alert_id):
     data = request.json
@@ -68,6 +71,7 @@ def update_alert(alert_id):
         return jsonify({'message': 'Alert not found'}), 404
 
 # Function to delete an alert by its ID
+# http://localhost:8080/alerts/id - DELETE
 @alert_bp.route('/alert/<int:alert_id>', methods=['DELETE'])
 def delete_alert(alert_id):
     # Query database for alert with specified ID

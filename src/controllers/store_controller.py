@@ -4,9 +4,10 @@ from src.models.store import Store
 from marshmallow import ValidationError
 
 # Create blueprint for store controller
-store_bp = Blueprint('store', __name__)
+store_bp = Blueprint('store', __name__, url_prefix="store")
 
 # Function to create a new store
+# http://localhost:8080/stores - POST
 @store_bp.route('/store', methods=['POST'])
 def create_store():
     data = request.json
@@ -51,6 +52,7 @@ def create_store():
         return jsonify({'message': 'Failed to create a store', 'error': str(e)}), 500
     
 # Function to get a store by its ID
+# http://localhost:8080/stores/id - GET
 @store_bp.route('/store/<int:store_id>', methods=['GET'])
 def get_store(store_id):
     # Query database for store with specified ID
@@ -63,6 +65,7 @@ def get_store(store_id):
         return jsonify({'message': 'Store not found'}), 404
 
 # Function to update a store
+# http://localhost:8080/stores/id - PUT
 @store_bp.route('/store/<int:store_id>', methods=['PUT'])
 def update_store(store_id, new_data):
     # Query database for store with specified ID
@@ -86,6 +89,8 @@ def update_store(store_id, new_data):
         return jsonify({'message': 'Store not found'}), 404
 
 # Function to delete a store
+# http://localhost:8080/stores/id - DELETE    
+@store_bp.route('/store/<int:store_id>', methods=['DELETE'])
 def delete_store(store_id):
     # Query database for store with specified ID
     store = Store.query.get(store_id)

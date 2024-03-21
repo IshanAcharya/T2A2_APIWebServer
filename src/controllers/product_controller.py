@@ -4,9 +4,10 @@ from src.models.product import Product
 from marshmallow import ValidationError
 
 # Create blueprint for product controller
-product_bp = Blueprint('product', __name__)
+product_bp = Blueprint('product', __name__, url_prefix="/product")
 
 # Function to create a new product
+# http://localhost:8080/products - POST
 @product_bp.route('/product', methods=['POST'])
 def create_product():
     data = request.json
@@ -43,6 +44,7 @@ def create_product():
         return jsonify({'message': 'Failed to create product', 'error': str(e)}), 500
     
 # Function to retrieve product by ID
+# http://localhost:8080/products/id - GET
 @product_bp.route('/product/<int:product_id>', methods=['GET'])
 def get_product(product_id):
     # Query database for product with specified ID
@@ -55,6 +57,7 @@ def get_product(product_id):
         return jsonify({'message': 'Product not found'}), 404
     
 # Function to update product by ID
+# http://localhost:8080/products/id - PUT
 @product_bp.route('/product/<int:product_id>', methods=['PUT'])
 def update_product(product_id):
     data = request.json
@@ -74,6 +77,7 @@ def update_product(product_id):
             return jsonify({'message': 'Failed to update product', 'error': str(e)}), 500
 
 # Function to delete product by ID
+# http://localhost:8080/products/id - DELETE
 @product_bp.route('/product/<int:product_id>', methods=['DELETE'])
 def delete_product(product_id):
     # Query database for product with specified ID

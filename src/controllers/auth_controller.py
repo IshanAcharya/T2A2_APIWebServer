@@ -9,6 +9,7 @@ from marshmallow import ValidationError
 auth_bp = Blueprint('auth', __name__, url_prefix="/auth")
 
 # Function to register a new user
+# http://localhost:8080/register - POST
 @auth_bp.route('/register', methods=['POST'])
 def register_user():
     # Obtain user data
@@ -57,6 +58,7 @@ def generate_password_hash(password):
     return hashed_password.decode('utf-8')
 
 # Function to log in a user
+# http://localhost:8080/login - POST
 @auth_bp.route('/login', methods=['POST'])
 def login_user():
     data = request.json
@@ -82,6 +84,7 @@ def login_user():
     return jsonify({'access_token': access_token}), 200
 
 # Function to authenticate a user
+# http://localhost:8080/protected - GET/POST
 @auth_bp.route('/protected', methods=['GET', 'POST'])
 @jwt_required()
 def protected():

@@ -4,9 +4,10 @@ from src.models.promotion import Promotion
 from marshmallow import ValidationError
 
 # Create blueprint for promotion controller
-promotion_bp = Blueprint('promotion', __name__)
+promotion_bp = Blueprint('promotion', __name__, url_prefix="/promotion")
 
 # Function to create a promotion
+# http://localhost:8080/promotions - POST
 @promotion_bp.route('/promotion', methods=['POST'])
 def create_promotion():
     data = request.json
@@ -44,7 +45,8 @@ def create_promotion():
         db.session.rollback()
         return jsonify({'message': 'Failed to create a promotion', 'error': str(e)}), 500
 
-# Function to retrieve a promotion by ID 
+# Function to retrieve a promotion by ID
+# http://localhost:8080/promotions/id - GET
 @promotion_bp.route('/promotion/<int:promotion_id>', methods=['GET'])
 def get_promotion(promotion_id):
     # Query database for promotion with the specified ID
@@ -57,6 +59,7 @@ def get_promotion(promotion_id):
         return jsonify({'message': 'Promotion not found'}), 404
 
 # Function to update a promotion by ID
+# http://localhost:8080/promotions/id - PUT
 @promotion_bp.route('/promotion/<int:promotion_id>', methods=['PUT'])
 def update_promotion(promotion_id, new_data):
     data = request.json
@@ -80,6 +83,7 @@ def update_promotion(promotion_id, new_data):
         return jsonify({'message': 'Promotion not found'}), 404
 
 # Function to delete promotion by ID
+# http://localhost:8080/promotions/id - DELETE
 @promotion_bp.route('/promotion/<int:promotion_id>', methods=['DELETE'])
 def delete_promotion(promotion_id):
     # Query database for promotion with the specified ID

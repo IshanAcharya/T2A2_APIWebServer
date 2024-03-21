@@ -4,9 +4,10 @@ from src.models.purchase import Purchase
 from marshmallow import ValidationError
 
 # Create blueprint for purchase controller
-purchase_bp = Blueprint('purchase', __name__)
+purchase_bp = Blueprint('purchase', __name__, url_prefix="/purchase")
 
 # Function to create a purchase
+# http://localhost:8080/purchases - POST
 @purchase_bp.route('/purchase', methods=['POST'])
 def create_purchase():
     data = request.json
@@ -40,8 +41,9 @@ def create_purchase():
         # Rollback transaction if error present
         db.session.rollback()
         return jsonify({'message': 'Failed to created a purchase', 'error': str(e)}), 500
-    
+
 # Function to retrieve a purchase by ID
+# http://localhost:8080/purchases/id - GET
 @purchase_bp.route('/purchase/<int:purchase_id>', methods=['GET'])    
 def get_purchase(purchase_id):
     # Query database for purchase with specified ID
@@ -53,6 +55,7 @@ def get_purchase(purchase_id):
         return jsonify({'message': 'Purchase not found'}), 404
 
 # Function to update a purchase by ID
+# http://localhost:8080/purchases/id - PUT
 @purchase_bp.route('/purchase/<int:purchase_id>', methods=['PUT'])     
 def update_purchase(purchase_id, new_data):
     data = request.json
@@ -75,6 +78,7 @@ def update_purchase(purchase_id, new_data):
         return jsonify({'message': 'Purchase not found'}), 404
 
 # Function to delete a purchase by ID
+# http://localhost:8080/purchases/id - DELETE
 @purchase_bp.route('/purchase/<int:purchase_id>', methods=['DELETE']) 
 def delete_purchase(purchase_id):
     # Query database for the purchase with the specified ID
