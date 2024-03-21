@@ -15,6 +15,19 @@ def create_promotion():
     promotion_discount = data.get('promotion_discount')
 
     try: 
+        # Validate input data 
+        if not product_id or not promotion_type or not promotion_discount:
+            raise ValidationError('Product ID, promotion type and promotion discount are required fields')
+        
+        # Validate promotion discount to be positive value
+        if promotion_discount <= 0:
+            raise ValidationError('Promotion discount must be a positive value')
+        
+        # Check for duplicate promotion
+        existing_promotion = Promotion.query.filter_by(product_id=product_id, promotion_type=promotion_type).first()
+        if existing_promotion:
+            raise ValidationError('Duplicate promotion entry')
+
         # Create new promotion object
         new_promotion = Promotion(product_id=product_id, promotion_type=promotion_type, promotion_discount=promotion_discount)
 
@@ -24,6 +37,8 @@ def create_promotion():
 
         # Return success message and ID of new promotion
         return jsonify({'message': 'Promotion created successfully!', 'promotion_id': new_promotion.id}), 200
+    except ValidationError as ve:
+        return jsonify({'message': 'Validation Error', 'error': ve.messages}), 400
     except Exception as e:
         # Rollback and return if error present
         db.session.rollback()
