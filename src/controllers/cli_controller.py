@@ -11,6 +11,14 @@ from models.alert import Alert
 # Create blueprint for CLI Controller
 db_commands = Blueprint('db', __name__)
 
+# Initilaise database
+@db_commands.cli.command('init')
+def initialise_database():
+    db.drop_all()
+    db.create_all()
+    print("Flask application has been initialised")
+
+
 # Create tables in database 
 @db_commands.cli.command('create')
 def create_tables():
@@ -131,4 +139,3 @@ def seed_tables():
     db.session.commit()
 
     print("Tables seeded successfully")
-
