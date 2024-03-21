@@ -1,19 +1,19 @@
-from src.models import db
+from src import db
 from marshmallow import Schema, fields
 
 class Alert(db.Model):
     # Define table name for the model
-    __tablename__ = 'alert'
+    __tablename__ = 'alerts'
 
     # Define columns for the model
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
     day_of_week = db.Column(db.String(20), nullable=False)
 
     # Define relationship with other models
-    user = db.relationship('User', backref='alert', lazy=True)
-    product = db.relationship('Product', backref='alert', lazy=True)
+    users = db.relationship('User', backref='alert', lazy=True)
+    products = db.relationship('Product', backref='alert', lazy=True)
 
     def serialise(self):
         return{

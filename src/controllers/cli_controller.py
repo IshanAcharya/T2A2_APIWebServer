@@ -1,12 +1,12 @@
 from flask import Blueprint
-from init import db, bcrypt
+from src import db, bcrypt
 from datetime import date
-from models.user import User
-from models.product import Product
-from models.promotion import Promotion
-from models.purchase import Purchase
-from models.store import Store
-from models.alert import Alert
+from src.models.user import User
+from src.models.product import Product
+from src.models.promotion import Promotion
+from src.models.purchase import Purchase
+from src.models.store import Store
+from src.models.alert import Alert
 
 # Create blueprint for CLI Controller
 db_commands = Blueprint('db', __name__)

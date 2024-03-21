@@ -1,9 +1,9 @@
-from src.models import db
+from src import db
 from marshmallow import Schema, fields, validates, ValidationError
 
 class User(db.Model):
     # Define table name for the model
-    __tablename__ = 'user'
+    __tablename__ = 'users'
 
     # Define columns for the model
     id = db.Column(db.Integer, primary_key=True)
@@ -13,8 +13,8 @@ class User(db.Model):
 
 
 # Define relationships with other models
-    purchase = db.relationship('Purchase', backref='user', lazy=True)
-    alert = db.relationship('Alert', backref='user', lazy=True)
+    purchases = db.relationship('Purchase', backref='buyer', lazy=True)
+    alerts = db.relationship('Alert', backref='owner', lazy=True)
 
 
 class UserSchema(Schema):

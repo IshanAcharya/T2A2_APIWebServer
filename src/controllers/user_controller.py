@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from src.models import db
+from src import db
 from src.models.user import User
 from marshmallow import ValidationError
 

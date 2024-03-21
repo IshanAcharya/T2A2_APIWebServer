@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from src.models import db
+from src import db
 from src.models.promotion import Promotion
 from marshmallow import ValidationError
 

@@ -1,24 +1,24 @@
-from src.models import db
+from src import db
 from marshmallow import Schema, fields
 
-class Purchase(db.model):
+class Purchase(db.Model):
     # Define table name for the model
-    __tablename__ = 'purchase'
+    __tablename__ = 'purchases'
 
     # Define columns for the model
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
-    store_id = db.Column(db.Integer, db.ForeignKey('store.id'), nullable=False)
-    promotion_id = db.Column(db.Integer, db.ForeignKey('promotion.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    store_id = db.Column(db.Integer, db.ForeignKey('stores.id'), nullable=False)
+    promotion_id = db.Column(db.Integer, db.ForeignKey('promotions.id'))
     price = db.Column(db.Float, nullable=False)
     purchase_date = db.Column(db.DateTime, nullable=False)
 
     # Define relationship with other models
-    user = db.relationship('User', backref='purchase')
-    product = db.relationship('Product', backref='purchase')
-    store = db.relationship('Store', backref='purchases')
-    promotion = db.relationship('Promotion', backref='purchase')
+    users = db.relationship('User', backref='purchases')
+    products = db.relationship('Product', backref='purchases')
+    stores = db.relationship('Store', backref='purchases')
+    promotions = db.relationship('Promotion', backref='purchases')
 
     def serialise(self):
         return{
@@ -32,7 +32,7 @@ class Purchase(db.model):
         }
     
 class PurchaseSchema(Schema):
-    id = fields.int(dump_only=True)
+    id = fields.Int(dump_only=True)
     user_id = fields.Int(required=True)
     product_id = fields.Int(required=True)
     store_id = fields.Int(required=True)

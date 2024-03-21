@@ -1,18 +1,18 @@
-from src.models import db
+from src import db
 from marshmallow import Schema, fields
 
 class Store(db.Model):
     # Define table name for the model
-    __tablename__ = 'store'
+    __tablename__ = 'stores'
 
     # Define columns for the model
-    id = db.Column(db.integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     type = db.Column(db.String(50), nullable=False)
     location = db.Column(db.String(200), nullable=False)
 
     # Define relationship with other models
-    purchase = db.relationship('Purchase', backref='store', lazy=True)
+    purchase = db.relationship('Purchase', backref='stores', lazy=True)
 
     def serialise(self):
         return {
