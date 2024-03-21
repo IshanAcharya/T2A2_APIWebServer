@@ -21,6 +21,12 @@ def create_purchase():
         # Conduct check to ensure that the price is positive
         if price <= 0:
             return jsonify({'message': 'Price must be a positive value'}), 400
+        
+        # Check for duplicate purchase entries
+        existing_purchase = Purchase.query.filter_by(user_id=user_id, product_id=product_id, store_id=store_id).first()
+        if existing_purchase:
+            return jsonify({'message': 'Duplicate purchase entry!'}), 400
+
         # Create new purchase object
         new_purchase = Purchase(user_id=user_id, product_id=product_id, store_id=store_id, price=price, purchase_date=purchase_date, promotion_id=promotion_id)
         # Add new purchase to database
@@ -28,6 +34,8 @@ def create_purchase():
         db.session.commit()
         # Return success message with ID of new created purchase
         return jsonify({'message': 'Purchase created successfully!', 'purchase_id': new_purchase.id}), 201
+    except ValidationError as ve:
+        return jsonify({'message': 'Validation Error', 'error': str(ve)}), 400
     except Exception as e:
         # Rollback transaction if error present
         db.session.rollback()
@@ -57,6 +65,8 @@ def update_purchase(purchase_id, new_data):
                 setattr(purchase, key, value)
             db.session.commit()
             return jsonify({'message': 'Purchase updated successfully!'}), 200
+        except ValidationError as ve:
+            return jsonify({'message': 'Validation Error', 'error': str(ve)}), 400
         except Exception as e:
             # Rollback transaction if error present
             db.session.rollback()
