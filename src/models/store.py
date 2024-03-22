@@ -14,7 +14,7 @@ class Store(db.Model):
     # Define relationship with other models
     purchase = db.relationship('Purchase', backref='stores', lazy=True)
 
-    def serialise(self):
+    def serialize(self):
         return {
             'id': self.id,
             'name': self.name,
@@ -22,7 +22,6 @@ class Store(db.Model):
             'location': self.location
         }
     
-
 class StoreSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True)

@@ -20,7 +20,7 @@ class Purchase(db.Model):
     stores = db.relationship('Store', backref='purchases')
     promotions = db.relationship('Promotion', backref='purchases')
 
-    def serialise(self):
+    def serialize(self):
         return{
             'id': self.id,
             'user_id': self.user_id,

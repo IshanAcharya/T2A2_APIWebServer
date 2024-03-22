@@ -7,7 +7,7 @@ from marshmallow import ValidationError
 
 user_bp = Blueprint('user', __name__, url_prefix="/user")
 
-# Load schema for request validation
+# Load schema for request validation and response serialization
 user_schema = UserSchema()
 
 # Function to create a new user

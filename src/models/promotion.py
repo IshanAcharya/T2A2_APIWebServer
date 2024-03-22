@@ -14,7 +14,7 @@ class Promotion(db.Model):
     # Define relationship with other models
     purchases = db.relationship('Purchase', backref='promotions')
 
-    def serialise(self):
+    def serialize(self):
         return{
             'id': self.id,
             'product_id': self.product_id,

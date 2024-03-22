@@ -15,7 +15,7 @@ class Alert(db.Model):
     users = db.relationship('User', backref='alert', lazy=True)
     products = db.relationship('Product', backref='alert', lazy=True)
 
-    def serialise(self):
+    def serialize(self):
         return{
             'id': self.id,
             'user_id': self.user_id,
