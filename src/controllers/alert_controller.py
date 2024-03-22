@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from src import db
-from src.models.alert import Alert
+from src.models.alert import Alert, AlertSchema
 from marshmallow import ValidationError
 
 # Create blueprint for alert controller

@@ -27,4 +27,6 @@ class UserSchema(Schema):
     def validate_password(self, value):
         if len(value) <8:
             raise ValidationError('Password must be at least 8 characters long.')
+        
 
+user_schema = UserSchema()

@@ -12,7 +12,6 @@ class Promotion(db.Model):
     promotion_discount = db.Column(db.Float, nullable=False)
 
     # Define relationship with other models
-    products = db.relationship('Product', backref='promotions')
     purchases = db.relationship('Purchase', backref='promotions')
 
     def serialise(self):
@@ -28,3 +27,5 @@ class PromotionSchema(Schema):
     product_id = fields.Int(required=True)
     promotion_type = fields.Str(required=True)
     promotion_discount = fields.Float(required=True)
+
+promotion_schema = PromotionSchema()

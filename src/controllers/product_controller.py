@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from src import db
-from src.models.product import Product
+from src.models.product import Product, ProductSchema
 from marshmallow import ValidationError
 
 # Create blueprint for product controller
@@ -26,7 +26,7 @@ def create_product():
             raise ValidationError('Product name already exists!')
         
         # Validate category to be alphabetical only
-        if not category.isalphaa():
+        if not category.isalpha():
             raise ValidationError('Category must be alphabetical only')
         
         # Create new product object

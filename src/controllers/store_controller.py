@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from src import db
-from src.models.store import Store
+from src.models.store import Store, StoreSchema
 from marshmallow import ValidationError
 
 # Create blueprint for store controller
@@ -41,7 +41,7 @@ def create_store():
         new_store = Store(name=name, type=type, location=location)
 
         # Add new store to database
-        db.sesion.add(new_store)
+        db.session.add(new_store)
         db.session.commit()
 
         # Return success message with ID of newly created store

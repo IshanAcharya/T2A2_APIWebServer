@@ -28,3 +28,6 @@ class StoreSchema(Schema):
     name = fields.Str(required=True)
     type = fields.Str(required=True)
     location = fields.Str(required=True)
+
+
+store_schema = StoreSchema()

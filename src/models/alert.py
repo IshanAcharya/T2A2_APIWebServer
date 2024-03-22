@@ -28,3 +28,5 @@ class AlertSchema(Schema):
     user_id = fields.Int(required=True)
     product_id = fields.Int(required=True)
     day_of_week = fields.Str(required=True)
+
+alert_schema = AlertSchema()

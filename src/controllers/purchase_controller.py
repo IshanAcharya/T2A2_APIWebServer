@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from src import db
-from src.models.purchase import Purchase
+from src.models.purchase import Purchase, PurchaseSchema
 from marshmallow import ValidationError
 
 # Create blueprint for purchase controller

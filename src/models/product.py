@@ -44,7 +44,8 @@ class Product(db.Model):
     
 class ProductSchema(Schema):
     id = fields.Int(dump_only=True)
-    product_name = fields.Str(required=True)
-    product_brand = fields.Str(required=True)
-    product_category = fields.Str(required=True)
-    
+    name = fields.Str(required=True)
+    brand = fields.Str(required=True)
+    category = fields.Str(required=True)
+
+product_schema = ProductSchema()

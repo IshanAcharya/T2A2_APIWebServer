@@ -39,3 +39,5 @@ class PurchaseSchema(Schema):
     promotion_id = fields.Int()
     price = fields.Float(required=True)
     purchase_date = fields.DateTime(required=True)
+
+purchase_schema = PurchaseSchema()
