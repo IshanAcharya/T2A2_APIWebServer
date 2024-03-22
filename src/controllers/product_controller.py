@@ -6,33 +6,29 @@ from marshmallow import ValidationError
 # Create blueprint for product controller
 product_bp = Blueprint('product', __name__, url_prefix="/product")
 
+# Load schema for request validation and response serialization
+product_schema = ProductSchema()
+
 # Function to create a new product
 # http://localhost:8080/products - POST
 @product_bp.route('/product', methods=['POST'])
 def create_product():
-    data = request.json
-    name = data.get('name')
-    brand = data.get('brand')
-    category = data.get('category')
+    try: 
+        # Validate incoming data
+        data = product_schema.load(request.json)
+    except ValidationError as ve:
+        return jsonify({'message': 'Validation error', 'error': ve.messages}), 400
 
     try:
-        # Validate input data
-        if not name or not brand or not category:
-            raise ValidationError('Name, brand and category are required fields!')
-        
         # Check for duplicate product names
-        existing_product = Product.query.filter_by(name=name).first()
+        existing_product = Product.query.filter_by(name=data['name']).first()
         if existing_product:
-            raise ValidationError('Product name already exists!')
-        
-        # Validate category to be alphabetical only
-        if not category.isalpha():
-            raise ValidationError('Category must be alphabetical only')
+            return jsonify({'message': 'Product name already exists'}), 400
         
         # Create new product object
-        new_product = Product(name=name, brand=brand, category=category)
+        new_product = Product(name=data['name'], brand=data['brand'], category=data['category'])
 
-        # Add new product to database 
+        # Add new product to database and commit changes
         db.session.add(new_product)
         db.session.commit()
 
@@ -42,7 +38,7 @@ def create_product():
         # Rollback in case of any errors
         db.session.rollback()
         return jsonify({'message': 'Failed to create product', 'error': str(e)}), 500
-    
+
 # Function to retrieve product by ID
 # http://localhost:8080/products/id - GET
 @product_bp.route('/product/<int:product_id>', methods=['GET'])
@@ -50,8 +46,8 @@ def get_product(product_id):
     # Query database for product with specified ID
     product = Product.query.get(product_id)
     if product:
-        # Serialise product data and return it
-        return jsonify(product.serialise()), 200
+        # Serialize product data and return it
+        return product_schema.jsonify(product), 200
     else:
         # Return error message if product not found
         return jsonify({'message': 'Product not found'}), 404
@@ -60,21 +56,30 @@ def get_product(product_id):
 # http://localhost:8080/products/id - PUT
 @product_bp.route('/product/<int:product_id>', methods=['PUT'])
 def update_product(product_id):
-    data = request.json
     # Query database for product with specified ID
     product = Product.query.get(product_id)
     if product:
         try:
+            # Validate incoming data
+            data = product_schema.load(request.json, partial=True)
+
             # Update product attributes with new data
-            for key, value in data.items():
-                setattr(product, key, value)
+            product.name = data.get('name', product.name)
+            product.brand = data.get('brand', product.brand)
+            product.category = data.get('category', product.category)
+
             # Commit session
             db.session.commit()
-            return jsonify({'message': 'Product updated successfully!'}), 200
+            return jsonify({'message': 'Product updated successfully'}), 200
+        except ValidationError as ve:
+            return jsonify({'message': 'Validation error', 'error': ve.messages}), 400
         except Exception as e:
             # Rollback session if error present
             db.session.rollback()
             return jsonify({'message': 'Failed to update product', 'error': str(e)}), 500
+    else:
+        # Return message if product not found
+        return jsonify({'message': 'Product not found'}), 404
 
 # Function to delete product by ID
 # http://localhost:8080/products/id - DELETE
@@ -87,7 +92,7 @@ def delete_product(product_id):
             # Delete product from database
             db.session.delete(product)
             db.session.commit()
-            return jsonify({'message': 'Product deleted successfully!'}), 200
+            return jsonify({'message': 'Product deleted successfully'}), 200
         except Exception as e:
             # Rollback if error present
             db.session.rollback()
