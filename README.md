@@ -43,25 +43,27 @@ By integrating purchase tracking and offering the ability to analyse their spend
 
 ## R3. Why have you chosen this database system. What are the drawbacks compared to others?
 
-Chosen for:
+For this project I chose to utilise PostgreSQL, a power open-source object-relational database management system (DBMS), as my preferred DBMS due to its robustness, reliability, and support for complex data relationships (Google Cloud, 2024). As a relational database, PostgreSQL organises data into tables with rows and columns, which allow for efficient data storage, retrieval, and management. This relational model ensures data integrity through the use of primary and foreign keys, and allows for seamless integration of complex relationship between different entities, which is evident in this Shopping Diary Application's `User`, `Product`, `Purchase`, `Promotion`, `Store` and `Alert` models.
 
-- open source
-- robustness
-- reliability
-- support for complex relationships
+**Benefits of PostgreSQL**
 
+* PostgreSQL's ACID compliance (Atomicity, Consistency, Isolation, Durability) guarantees transactional integrity, which makes it a solid choice for this application where data accuracy is essential. For example in `purchase_controller.py`, incorrectly recorded purchases or prices could lead to inaccurate financial reporting and affect a user's personal budgeting as a result. ACID transactions ensures that each purchase is either fully recorded, or, is rolled back entirely, which prevents partial updates from occuring which could impact data consistency
 
+* PostgreSQL's robust support for relational data modeling makes it a suitable chocie for an application such as this. By leveraging foreign keys and constraints, PostgreSQL enables complex relationships between different entities to be established within the application. For example, the connection between `purchase` and `user` is established through the use of foreign keys in the `purchase` model, which ensures referential integrity and data consistency. PostgreSQL also maps and enforces relationships between `product`, `store`, `promotion`, and alert, which enable users to conduct advanced queries and gain valuable insights into their shopping data and purchasing patterns.
 
-Drawbacks: 
+With SQLAlchemy serving as the ORM (Object-Relational Mapping) toolkit, it allows for easy interaction with the aforementioned relationships in the application and allows for data entities to be manipulated efficiently. Through PostgreSQL's reliable relational data modeling and the integration of SQLAlchemy as a toolkit, it allows for this application to offer a comprehensive platform for users to analyse their purchasing behaviour and optimise their financial decisions
 
-- Complexity vs other database systems
-- Learning curve
+* As PostgreSQL is is open-source, it allows access into a vast ecosystem of extensions and plugins that enhance the DBMS' functionality and performance. This allows for this application to provide users with a secure, scalable and feature-rich platform for managing their shopping data effectively. Due to its open-source nature, it also offers a cost-effective solution in managing the scalability of the application without incurring additional costs in the future.
 
+**Drawbacks of PostgreSQL vs other DBMS**
 
+While PostgreSQL offers numerous advantages for this application, it also has a few drawbacks:
 
+* PostgreSQL posesses a high degree of complexity, which stems from its extensive feature set and advanced capabilities. It can be both daunting and challenging to use PostgreSQL in an application due to its steep learning curve, which might pose a problem for developers who are not familiar with relational databases or are transitioning from other simple solutions such as a NoSQL database like MongoDB which offers a simple document-based approach. Another popular relational database, MySQL, offers simplicity and ease of use, but it lacks some of the advanced features and scalability options provided by PostgreSQL
 
+* PostgresQL's performance may not be as optimal for scenarios that require high-speed operations or horizontal scalability compared to other specialised databases such as MongoDB or MySQL. MongoDB, which is a popular NoSQL database, excels in handling unstructured data and offers horizontal scalability which makes it suitable for appications with large volumes of data and dynamic schemas. MongoDB, however, lacks the transactional integrity and ACID compliance that PostgreSQL provides, which makes it a less suitable option for applications that prioritise data consistency and reliability. 
 
-
+Despite these drawbacks, PostgreSQL still remains as the suitable choice for this Shopping Diary API Application due to its robustness, reliability, and support for complex relationships, which align closely with the application's requirement for data integrity and relational data modeling.
 
 ## R4. Identify and discuss the key functionalities and benefits of an ORM.
 
@@ -114,7 +116,8 @@ Method: POST
 
 Request body:
 
-```{
+```
+{
   "username": "string",
   "email": "string",
   "password": "string"
@@ -144,7 +147,8 @@ Method: POST
 
 Request body:
 
-```{
+```
+{
   "email": "string",
   "password": "string"
 }
@@ -189,7 +193,9 @@ URL: `/user`
 Method: POST
 
 Request body:
-```{
+
+```
+{
   "username": "string",
   "email": "string",
   "password": "string"
@@ -233,7 +239,9 @@ URL: `/user/<user_id>`
 Method: PUT
 
 Request body:
-```{
+
+```
+{
   "username": "string",
   "email": "string",
   "password": "string"
@@ -277,7 +285,9 @@ URL: `/product`
 Method: POST
 
 Request body:
-```{
+
+```
+{
   "name": "string",
   "brand": "string",
   "category": "string"
@@ -313,7 +323,9 @@ URL: `/product/<product_id>`
 Method: PUT
 
 Request body:
-```{
+
+```
+{
   "name": "string",
   "brand": "string",
   "category": "string"
@@ -355,7 +367,9 @@ URL: `/purchase`
 Method: POST
 
 Request body:
-```{
+
+```
+{
   "user_id": "integer",
   "product_id": "integer",
   "store_id": "integer",
@@ -396,7 +410,9 @@ URL: `/purchase/<purchase_id>`
 Method: PUT
 
 Request body: 
-```{
+
+```
+{
   "user_id": "integer",
   "product_id": "integer",
   "store_id": "integer",
@@ -443,7 +459,9 @@ URL: `/promotion`
 Method: POST
 
 Request body:
-```{
+
+```
+{
   "product_id": "integer",
   "promotion_type": "string",
   "promotion_discount": "float"
@@ -481,7 +499,9 @@ URL: `/promotion/<promotion_id>`
 Method: PUT
 
 Request body:
-```{
+
+```
+{
   "product_id": "integer",
   "promotion_type": "string",
   "promotion_discount": "float"
@@ -525,7 +545,9 @@ URL: `/store`
 Method: POST
 
 Request body: 
-```{
+
+```
+{
   "name": "string",
   "type": "string",
   "location": "string"
@@ -563,7 +585,9 @@ URL: `/store/<store_id>`
 Method: PUT
 
 Request body:
-```{
+
+```
+{
   "name": "string",
   "type": "string",
   "location": "string"
@@ -607,7 +631,9 @@ URL: `/alert`
 Method: POST
 
 Request body: 
-```{
+
+```
+{
   "user_id": "integer",
   "product_id": "integer",
   "day_of_week": "string"
@@ -645,7 +671,9 @@ URL: `/alert/<alert_id>`
 Method: PUT
 
 Request body:
-```{
+
+```
+{
   "user_id": "integer",
   "product_id": "integer",
   "day_of_week": "string"
@@ -860,13 +888,13 @@ The `user` model represents individuals who use the application and is central t
 
 Relationships:
 
-    * One-to-Many relationship with `purchase`: Each user can make multiple purchases, established through the `purchases` relationship
-        * Cardinality: One-to-Many (one user can have multiple purchases)
-        * Directionality: User (One) -> Purchase (Many)
+* One-to-Many relationship with `purchase`: Each user can make multiple purchases, established through the `purchases` relationship
+    * Cardinality: One-to-Many (one user can have multiple purchases)
+    * Directionality: User (One) -> Purchase (Many)
 
-    * One-to-Many relationship with `alert`: Each user can set up multiple alerts, established through the `alerts` relationship
-        * Cardinality: One-to-Many (one user can set up multiple alerts)
-        * Directionality: User (One) -> Alert (Many).
+* One-to-Many relationship with `alert`: Each user can set up multiple alerts, established through the `alerts` relationship
+    * Cardinality: One-to-Many (one user can set up multiple alerts)
+    * Directionality: User (One) -> Alert (Many).
 
 **Product Model**
 
@@ -892,17 +920,17 @@ The `product` model represents items available for purchase in the application. 
 
 Relationships:
 
-    * One-to-Many relationship with Purchase: Each product can be associated with multiple purchases, established through the `purchases` relationship
-        * Cardinality: One-to-Many (One product can be associated with multiple purchases)
-        * Directionality: Product (One) -> Purchase (Many)
+* One-to-Many relationship with Purchase: Each product can be associated with multiple purchases, established through the `purchases` relationship
+    * Cardinality: One-to-Many (One product can be associated with multiple purchases)
+    * Directionality: Product (One) -> Purchase (Many)
 
-    * One-to-Many relationship with Alert: Each product can be associated with multiple alerts, established through the `alerts` relationship
-        * Cardinality: One-to-Many (One product can be associated with multiple alerts)
-        * Directionality: Product (One) -> Alert (Many)
+* One-to-Many relationship with Alert: Each product can be associated with multiple alerts, established through the `alerts` relationship
+    * Cardinality: One-to-Many (One product can be associated with multiple alerts)
+    * Directionality: Product (One) -> Alert (Many)
 
-    * One-to-Many relationship with Promotion: Each product can be associated with multiple promotions, established through the `promotions` relationship
-        * Cardinality: One-to-Many (One product can be associated with multiple promotions)
-        * Directionality: Product (One) -> Promotion (Many).
+* One-to-Many relationship with Promotion: Each product can be associated with multiple promotions, established through the `promotions` relationship
+    * Cardinality: One-to-Many (One product can be associated with multiple promotions)
+    * Directionality: Product (One) -> Promotion (Many).
 
 **Promotion Model**
 
@@ -926,13 +954,13 @@ The `promotion` model represents discounts or special offers applicable to produ
 
 Relationships:
 
-    * One-to-One relationship with `purchase`: One promotion can be associated with one purchase, established through the `purchases` relationship
-        * Cardinality: One-to-One (One promotion can be associated with one purchase)
-        * Directionality: Promotion (One) -> Purchase (One)
+* One-to-One relationship with `purchase`: One promotion can be associated with one purchase, established through the `purchases` relationship
+    * Cardinality: One-to-One (One promotion can be associated with one purchase)
+    * Directionality: Promotion (One) -> Purchase (One)
 
-    * Many-to-One relationship with `product`: Many products can be applied to one promotion, established through the `product` relationship
-        * Cardinality: Many-to-One (Many products can be applied to one promotion)
-        * Directionality: Product (Many) -> Promotion (One).
+* Many-to-One relationship with `product`: Many products can be applied to one promotion, established through the `product` relationship
+    * Cardinality: Many-to-One (Many products can be applied to one promotion)
+    * Directionality: Product (Many) -> Promotion (One).
 
 **Purchase Model**
 
@@ -962,18 +990,18 @@ The `purchase` model represents transactions made by users. It captures details 
 
 Relationships:
 
-    * Many-to-One relationship with `user`: Many purchases can be made by one user, established through the `buyer` relationship
-        * Cardinality: Many-to-One (Many purchases can be made by one user)
-        * Directionality: User (Many) -> Purchase (One)
-    * Many-to-One relationship with `product`: Many purchases can involve one product, established through the `product` relationship
-        * Cardinality: Many-to-One (Many purchases can involve one product)
-        * Directionality: Product (Many) -> Purchase (One)
-    * Many-to-One relationship with `store`: Many purchases can be made at one store, established through the `stores` relationship
-        * Cardinality: Many-to-One (Many purchases can be made at one store)
-        * Directionality: Store (Many) -> Purchase (One)
-    * One-to-One relationship with `promotion`: Each purchase can be associated with one promotion, established through the `promotions` relationship
-        * Cardinality: One-to-One (Each purchase can be associated with one promotion)
-        * Directionality: Promotion (One) - Purchase (One).
+* Many-to-One relationship with `user`: Many purchases can be made by one user, established through the `buyer` relationship
+    * Cardinality: Many-to-One (Many purchases can be made by one user)
+    * Directionality: User (Many) -> Purchase (One)
+* Many-to-One relationship with `product`: Many purchases can involve one product, established through the `product` relationship
+    * Cardinality: Many-to-One (Many purchases can involve one product)
+    * Directionality: Product (Many) -> Purchase (One)
+* Many-to-One relationship with `store`: Many purchases can be made at one store, established through the `stores` relationship
+    * Cardinality: Many-to-One (Many purchases can be made at one store)
+    * Directionality: Store (Many) -> Purchase (One)
+* One-to-One relationship with `promotion`: Each purchase can be associated with one promotion, established through the `promotions` relationship
+    * Cardinality: One-to-One (Each purchase can be associated with one promotion)
+    * Directionality: Promotion (One) - Purchase (One).
 
 **Store Model**
 
@@ -997,9 +1025,9 @@ The `store` model represents physical or virtual locations where products can be
 
 Relationships:
     
-    * One-to-Many relationship with `purchase`: Each store can have multiple purchases associated with it, established through the `purchases` relationship
-        * Cardinality: One-to-Many (One store can have multiple purchases associated with it)
-        * Directionality: Store (One) -> Purchase (Many).
+* One-to-Many relationship with `purchase`: Each store can have multiple purchases associated with it, established through the `purchases` relationship
+    * Cardinality: One-to-Many (One store can have multiple purchases associated with it)
+    * Directionality: Store (One) -> Purchase (Many).
 
 **Alert Model**
 
@@ -1024,12 +1052,12 @@ The `alert` model represents notifications set by users to monitor specific prod
 
 Relationships:
 
-    * Many-to-One relationship with `user`: Many alerts can belong to one user, establihed through the `owner` relationship
-        * Cardinality: Many-to-One (Many alerts can belong to one user)
-        * Directionality: User (Many) -> Alert (One)
-    * Many-to-One relationship with `product`: Many alerts can be set for one product, established through the `product` relationship
-        * Cardinality: Many-to-One (Many alerts can be set for one product)
-        * Directionality: Product (Many) -> Alert (One).
+* Many-to-One relationship with `user`: Many alerts can belong to one user, establihed through the `owner` relationship
+    * Cardinality: Many-to-One (Many alerts can belong to one user)
+    * Directionality: User (Many) -> Alert (One)
+* Many-to-One relationship with `product`: Many alerts can be set for one product, established through the `product` relationship
+    * Cardinality: Many-to-One (Many alerts can be set for one product)
+    * Directionality: Product (Many) -> Alert (One).
 
 Each of the relationships established above have specific cardinality and directionality, which indicates how the entities within the database are related to each other and how they interact within the application. By doing this, it contributes towards ensuring data consistency and data integrity within the database of the application.
 
@@ -1067,10 +1095,6 @@ These activities included:
 - Workflow established where I had milestones/due dates in one column, my current outstanding tasks, what I was working on, what needed to be reviewed after being completed, and once a card/task passed through all of that, it ended up in the completed pile
 
 
-
-
-
-
 # Reference
 
 https://en.wikipedia.org/wiki/Object–relational_mapping
@@ -1078,3 +1102,6 @@ https://en.wikipedia.org/wiki/Object–relational_mapping
 https://en.wikipedia.org/wiki/SQLAlchemy
 
 https://www.freecodecamp.org/news/what-is-an-orm-the-meaning-of-object-relational-mapping-database-tools/
+
+
+Google Cloud 2024, PostgreSQL vs SQL Server: What are the key differences?, viewed 29 February 2024, https://cloud.google.com/learn/postgresql-vs-sql
