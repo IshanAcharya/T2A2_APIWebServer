@@ -236,6 +236,7 @@ For example,
 # Define relationships with other models
     purchases = db.relationship('Purchase', backref='buyer', lazy=True)
     alerts = db.relationship('Alert', backref='owner', lazy=True)
+```
 
 In the `user` model above, the relationship with the `purchase` and `alert` models are established through the `db.relationship` attribute. This attribute specifies the relatiosnhip between the `user` model(parent) and the `purchase` and `alert` models (children). The `backref` parameter in `db.relationship` defines a reference from the child models, `purchase` and `alert`, back to the parent model `user`, which enables easy navigation between related objects. Through this parent-child relationship, a `user` object can easily access all purchases made by that user through the `purchases` attribute. In the application, the `db.relationshp` method is used different on different models based on the cardonality and directionality of the relationships.
 
@@ -277,13 +278,14 @@ Using SQLAchemy to establish relationships between models in this application en
 
 ## R9. Discuss the database relations to be implemented in your application.
 
+During the planning stage of this Shopping Diary API Application, it was essential to first create an Entity Relationship Database that would allow me to visualise how I wanted the relationships to work with the 6 different models within this application. By doing this, it allowed me to establish how users, products, promotions, purchases, stores and alerts would interact with each other. 
 
 **User Model**
 
 `user`
 
 ```class User(db.Model):
-# Define table name for the model
+    # Define table name for the model
     __tablename__ = 'users'
 
     # Define columns for the model
@@ -293,40 +295,187 @@ Using SQLAchemy to establish relationships between models in this application en
     password = db.Column(db.String(60), unique=True, nullable=False)
 
 
-# Define relationships with other models
+    # Define relationships with other models
     purchases = db.relationship('Purchase', backref='buyer', lazy=True)
     alerts = db.relationship('Alert', backref='owner', lazy=True)
 ```
 
+The `user` model represents individuals who use the application and is central to the entire application system. Users can make purchases and set alerts for products.
+
+Relationships:
+
+    * One-to-Many relationship with `purchase`: Each user can make multiple purchases, established through the `purchases` relationship
+        * Cardinality: One-to-Many (one user can have multiple purchases)
+        * Directionality: User (One) -> Purchase (Many)
+
+    * One-to-Many relationship with `alert`: Each user can set up multiple alerts, established through the `alerts` relationship
+        * Cardinality: One-to-Many (one user can set up multiple alerts)
+        * Directionality: User (One) -> Alert (Many).
 
 **Product Model**
 
 `product`
 
+```class Product(db.Model):
+    # Define table name for the model
+    __tablename__ = 'products'
+
+    # Define columns for the model
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    brand = db.Column(db.String(100))
+    category = db.Column(db.String(100))
+
+    # Define relationships with other models
+    purchases = db.relationship('Purchase', backref='product', lazy=True)
+    alerts = db.relationship('Alert', backref='product', lazy=True)
+    promotions = db.relationship('Promotion', backref='product', lazy=True)
+```
+
+The `product` model represents items available for purchase in the application. Products can be purchased by users, trigger alerts, and be associated with promotions.
+
+Relationships:
+
+    * One-to-Many relationship with Purchase: Each product can be associated with multiple purchases, established through the `purchases` relationship
+        * Cardinality: One-to-Many (One product can be associated with multiple purchases)
+        * Directionality: Product (One) -> Purchase (Many)
+
+    * One-to-Many relationship with Alert: Each product can be associated with multiple alerts, established through the `alerts` relationship
+        * Cardinality: One-to-Many (One product can be associated with multiple alerts)
+        * Directionality: Product (One) -> Alert (Many)
+
+    * One-to-Many relationship with Promotion: Each product can be associated with multiple promotions, established through the `promotions` relationship
+        * Cardinality: One-to-Many (One product can be associated with multiple promotions)
+        * Directionality: Product (One) -> Promotion (Many).
 
 **Promotion Model**
 
 `promotion`
 
+```class Promotion(db.Model):
+    # Define table name for the model
+    __tablename__ = 'promotions'
+
+    # Define columns for the model
+    id = db.Column(db.Integer, primary_key=True)
+    purchase_id = db.Column(db.Integer, db.ForeignKey('purchases.id'))
+    promotion_type = db.Column(db.String(50), nullable=False)
+    promotion_discount = db.Column(db.Float, nullable=False)
+
+    # Define relationship with other models
+    purchases = db.relationship('Purchase', backref='promotions')
+```
+
+The `promotion` model represents discounts or special offers applicable to products. Promotions can be associated with purchases made by users.
+
+Relationships:
+
+    * One-to-One relationship with `purchase`: One promotion can be associated with one purchase, established through the `purchases` relationship
+        * Cardinality: One-to-One (One promotion can be associated with one purchase)
+        * Directionality: Promotion (One) -> Purchase (One)
+
+    * Many-to-One relationship with `product`: Many products can be applied to one promotion, established through the `product` relationship
+        * Cardinality: Many-to-One (Many products can be applied to one promotion)
+        * Directionality: Product (Many) -> Promotion (One).
+
 **Purchase Model**
 
 `purchase`
+
+```class Purchase(db.Model):
+    # Define table name for the model
+    __tablename__ = 'purchases'
+
+    # Define columns for the model
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    store_id = db.Column(db.Integer, db.ForeignKey('stores.id'), nullable=False)
+    promotion_id = db.Column(db.Integer, db.ForeignKey('promotions.id'))
+    price = db.Column(db.Float, nullable=False)
+    purchase_date = db.Column(db.DateTime, nullable=False)
+
+    # Define relationship with other models
+    users = db.relationship('User', backref='purchases')
+    products = db.relationship('Product', backref='purchases')
+    stores = db.relationship('Store', backref='purchases')
+    promotions = db.relationship('Promotion', backref='purchases')
+```
+
+The `purchase` model represents transactions made by users. It captures details such as the product purchased, the user who made the purchase, the store where the purchase occurred, and any associated promotions.
+
+Relationships:
+
+    * Many-to-One relationship with `user`: Many purchases can be made by one user, established through the `buyer` relationship
+        * Cardinality: Many-to-One (Many purchases can be made by one user)
+        * Directionality: User (Many) -> Purchase (One)
+    * Many-to-One relationship with `product`: Many purchases can involve one product, established through the `product` relationship
+        * Cardinality: Many-to-One (Many purchases can involve one product)
+        * Directionality: Product (Many) -> Purchase (One)
+    * Many-to-One relationship with `store`: Many purchases can be made at one store, established through the `stores` relationship
+        * Cardinality: Many-to-One (Many purchases can be made at one store)
+        * Directionality: Store (Many) -> Purchase (One)
+    * One-to-One relationship with `promotion`: Each purchase can be associated with one promotion, established through the `promotions` relationship
+        * Cardinality: One-to-One (Each purchase can be associated with one promotion)
+        * Directionality: Promotion (One) - Purchase (One).
 
 **Store Model**
 
 `store`
 
+```class Store(db.Model):
+    # Define table name for the model
+    __tablename__ = 'stores'
+
+    # Define columns for the model
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    type = db.Column(db.String(50), nullable=False)
+    location = db.Column(db.String(200), nullable=False)
+
+    # Define relationship with other models
+    purchase = db.relationship('Purchase', backref='stores', lazy=True)
+```
+
+The `store` model represents physical or virtual locations where products can be purchased, which provides context for purchases made by users.
+
+Relationships:
+    
+    * One-to-Many relationship with `purchase`: Each store can have multiple purchases associated with it, established through the `purchases` relationship
+        * Cardinality: One-to-Many (One store can have multiple purchases associated with it)
+        * Directionality: Store (One) -> Purchase (Many).
+
 **Alert Model**
 
 `alert`
 
-then explain relationships between each model (one-to-many relationships, one-to-one)
+```class Alert(db.Model):
+    # Define table name for the model
+    __tablename__ = 'alerts'
 
+    # Define columns for the model
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    day_of_week = db.Column(db.String(20), nullable=False)
 
+    # Define relationship with other models
+    users = db.relationship('User', backref='alert', lazy=True)
+    products = db.relationship('Product', backref='alert', lazy=True)
+```
 
+The `alert` model represents notifications set by users to monitor specific products. It allows users to input specific days as to when a product is likely to go on sale.
 
+Relationships:
 
+    * Many-to-One relationship with `user`: Many alerts can belong to one user, establihed through the `owner` relationship
+        * Cardinality: Many-to-One (Many alerts can belong to one user)
+        * Directionality: User (Many) -> Alert (One)
+    * Many-to-One relationship with `product`: Many alerts can be set for one product, established through the `product` relationship
+        * Cardinality: Many-to-One (Many alerts can be set for one product)
+        * Directionality: Product (Many) -> Alert (One).
 
+Each of the relationships established above have specific cardinality and directionality, which indicates how the entities within the database are related to each other and how they interact within the application. By doing this, it contributes towards ensuring data consistency and data integrity within the database of the application.
 
 ## R10. Describe the way tasks are allocated and tracked in your project.
 
