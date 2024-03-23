@@ -680,7 +680,67 @@ Response:
 
 ## R6. An ERD for your app.
 
+This application's Entity Relationship Diagram (ERD) is as follows:
+
 ![ERD](docs/ERD.png)
+
+1. **User Entity**
+
+| Attribute | Purpose | 
+| --------- | ------- |
+| UserID(PK) | Primary Key of the User entity, uniquely identifying each user |
+| Username  | Username chosen by user for login purposes |
+| Email     | Email address associated with user's account |
+| Password  | Password used for user authentication | 
+
+2. **Product Entity**
+
+| Attribute | Purpose | 
+| --------- | ------- |
+| ProductID(PK) | Primary Key of the Product entity, uniquely identifying each product | 
+| ProductName | Name of the product | 
+| ProductBrand | Brand or manufacturer of the product | 
+| ProductCategory | Which category a product is classified under | 
+
+3. **Promotion Entity**
+
+| Attribute | Purpose | 
+| --------- | ------- |
+| PromotionID(PK) | Primary Key of the Promotion entity, uniquely identifying each promotion | 
+| PurchaseID(FK) | Foreign Key referencing PurchaseID from Purchase entity table, indicating which purchase the promotion is associated with |
+| PromotionType | The type of promotion or sale |
+| PromotionDiscount | The discount offered as part of the promotion or sale |
+
+4. **Store Entity**
+
+| Attribute | Purpose | 
+| --------- | ------- |
+| StoreID(PK) | Primary Key of the Store entity, uniquely identifying each store |
+| StoreName | Name of the store |
+| StoreType | Type or category of store | 
+| Location  | Location of the store |
+
+5. **Purchase Entity**
+
+| Attribute | Purpose | 
+| --------- | ------- |
+| PurchaseID(PK) | Primary Key of the Purchase entity, uniquely identifying each purchase |
+| UserID(FK) | Foreign Key referencing UserID from the User entity table, indicating which user made the purchase |
+| ProductID(FK) | Foreign Key referencing ProductID from the Product entity table, indicating the product purchased |
+| StoreID(FK) | Foreign Key referencing StoreID from the Store entity table, indicating where the purchase was made |
+| PromotionID(FK) | Foreign Key referencing PromotionID from the Promotion entity table, indicating any promotion applied to the purchase |
+| Price     | Price of the purchased product |
+| PurchaseDate | Time and date of when the purchase was made |
+
+6. **Alert Entity**
+
+| Attribute | Purpose | 
+| --------- | ------- |
+| AlertID(PK) | Primary Key of the Alert entity, uniquely identifying each alert |
+| UserID(FK) | Foreign Key referencing UserID from User entity table, indicating which user the alert is associated with |
+| ProductID(FK) | Foreign Key referencing ProductID from Product entity table, indicating which product the alert is related to |
+| DayOfWeek | The day of the week for which an alert is set for |
+
 
 ## R7. Detail any third party services that your app will use.
 
