@@ -24,9 +24,6 @@ class Product(db.Model):
             'category': self.category
         }
     
-    # Ensure product names are unique
-    __table_args__ = (db.UniqueConstraint('name', 'brand', 'category', name='unique_product'),)
-    
 class ProductSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
