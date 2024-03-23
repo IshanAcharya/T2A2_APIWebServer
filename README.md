@@ -1,10 +1,12 @@
 # IshanAcharya_T2A2 - Shopping Diary API Webserver Application
 
-## Introduction
-
 Github Repository - https://github.com/IshanAcharya/T2A2_APIWebServer
 
 Trello Board - https://trello.com/b/ftQCFYV2/t2a2-api-webserver-shopping-diary
+
+## Introduction
+
+The Shopping Diary API Application is designed to streamline and enhance shopping experiences for all types of shoppers. It offers a seamless platform where users can effortlessly document their purchases, analyse their spending habits, and help understand their spending patterns to make better informed decisions when shopping. Whether it's to track daily shopping trips or analyse long-term shopping trends, this application simplifies the process and empowers users to manage their shopping with efficiency and clarity. 
 
 ## R1. Identification of the problem you are trying to solve by building this particular app.
 
@@ -100,87 +102,581 @@ Benefits of using ORM tools, such as SQLAlchemy, include:
 
 ## R5. Document all endpoints for your API.
 
-Auth Endpoints
+### Auth Endpoints
 
-Register
-    POST - /auth/register
+**Register a new user**
 
-Login 
-    POST - /auth/login
+Description: This endpoint allows users to register a new account
 
-Authenticate
-    GET/POST - /auth/protected
+URL: `/auth/register`
+
+Method: POST
+
+Request body:
+
+```{
+  "username": "string",
+  "email": "string",
+  "password": "string"
+}
+```
+Validation: 
+
+* `username` (required): Username of the user (string)
+* `email` (required): Email address of the user (string)
+* `password` (required): Password of the user (string)
+
+Response:
+
+* If success - `201 Created`: User registered successfully
+
+* If error - `400 Bad Request`: Validation error
+
+* If error - `500 Internal Server Error`: Failed to register user
+
+**Login a user**
+
+Description: This endpoint allows users to login into their account
+
+URL: `/auth/login`
+
+Method: POST
+
+Request body:
+
+```{
+  "email": "string",
+  "password": "string"
+}
+```
+
+Validation:
+
+* `email` (required): Email address of the user (string)
+* `password` (required): Password for the user (string)
+
+Response:
+
+* If success - `200 OK`: User logged in successfully
+
+* If error - `401 unauthorised`: Invalid email or password
 
 
-User Endpoints
+**Protected route**
 
-Create User
-    POST - 
-Get User
-    GET - 
-Update User
-    PUT - 
-Delete User
-    DELETE - 
+Description: This endpoint is a protected route, which requires authentication
+
+URL: `/auth/protected`
+
+Method: GET/POST
+
+Authorisation: Bearer token (access token obtained during login)
+
+Response:
+
+* If success - `200 OK`: User authenticated successfully
+
+* If error - `401 Unauthorised`: Missing or invalid authentication token
+
+### User Endpoints
+
+**Create a new user**
+
+Description: This endpoint allows the creation of a new user
+
+URL: `/user`
+
+Method: POST
+
+Request body:
+```{
+  "username": "string",
+  "email": "string",
+  "password": "string"
+}
+```
+
+Validation:
+
+* `username` (required): Username of the user (string)
+* `email` (required): Email address of the user (string)
+* `password` (required): Password for the user (string)
+
+Response:
+
+* If success - `201 Created`: User created successfully
+
+* If error - `400 Bad Request`: Validation error
+
+**Get a user**
+
+Description: This endpoint retrieves a user by their ID
+
+URL: `/user/<user_id>`
+
+Method: GET
+
+Response: 
+
+* If success - `200 OK`: User retrieved sucessfully
+
+* If error - `400 Bad Request`: Validation error
+
+* If error - `404 Not Found`: User not found
+
+**Update a user**
+
+Description: This endpoint updates a user's information by their ID
+
+URL: `/user/<user_id>`
+
+Method: PUT
+
+Request body:
+```{
+  "username": "string",
+  "email": "string",
+  "password": "string"
+}
+```
+
+Response:
+
+* If success - `200 OK`: User updated successfully
+
+* If error - `400 Bad Request`: Validation error
+
+* If error - `404 Not Found`: User not found
 
 
+**Delete a user**
+   
+Description: This endpoint deletes a user by their ID
 
-Product Endpoints
+URL: `/user/<user_id>`
 
-Create Product
-    POST - 
-Get Product
-    GET - 
-Update Product
-    PUT - 
-Delete Product
-    DELETE -
+Method: DELETE
 
+Response:
 
-Purchase Endpoints
+* If success - `200 OK`: User deleted successfully
 
-Create Purchase
-    POST - 
-Get Purchase
-    GET - 
-Update Purchase
-    PUT - 
-Delete Purchase
-    DELETE -
+* If error - `404 Not Found`: User not found
+
+* If error - `500 Internal Server Error`: Failed to delete user
 
 
-Promotion Endpoints
+### Product Endpoints
 
-Create Promotion
-    POST - 
-Get Promotion
-    GET - 
-Update Promotion
-    PUT - 
-Delete Promotion
-    DELETE -
+**Create a new product**
 
-Store Endpoints
+Description: This endpoint allows for the creation of a new product
 
-Create Store
-    POST - 
-Get Store
-    GET - 
-Update Store
-    PUT - 
-Delete Store
-    DELETE -
+URL: `/product`
 
-Alert Endpoints
+Method: POST
 
-Create Alert
-    POST - 
-Get Alert
-    GET - 
-Update Alert
-    PUT - 
-Delete Alert
-    DELETE -
+Request body:
+```{
+  "name": "string",
+  "brand": "string",
+  "category": "string"
+}
+```
+
+Response:
+
+* If success - `201 Created`: Product created successfully
+
+* If error - `400 Bad Request`: Validation error
+
+**Get a product**
+
+Description: This endpoint retrieves a product by its ID
+
+URL: `/product/<product_id>`
+
+Method: GET
+
+Response:
+
+* If success - `200 OK`: Product retrieved successfully
+
+* If error - `404 Not Found`: Product not found
+
+**Update a product**
+
+Description: This endpoint updates a product's information by its ID
+
+URL: `/product/<product_id>`
+
+Method: PUT
+
+Request body:
+```{
+  "name": "string",
+  "brand": "string",
+  "category": "string"
+}
+```
+
+Response: 
+
+* If success - `200 OK`: Product updated successfully
+
+* If error - `400 Bad Request`: Validation error
+
+* If error - `404 Not Found`: Product not found
+
+**Delete a product**
+ 
+Description: This endpoint deletes a product by its ID
+
+URL: `/product/<product_id>`
+
+Method: DELETE
+
+Response:
+
+* If success - `200 OK`: Product deleted successfully
+
+* If error - `404 Not Found`: Product not found
+
+* If error - `500 Internal Server Error`: Failed to delete product
+
+### Purchase Endpoints
+
+**Create a new purchase**
+
+Description: This endpoint allows for the creation of a new purchase
+
+URL: `/purchase`
+
+Method: POST
+
+Request body:
+```{
+  "user_id": "integer",
+  "product_id": "integer",
+  "store_id": "integer",
+  "price": "float",
+  "purchase_date": "string (format: YYYY-MM-DD)",
+  "promotion_id": "integer (optional)"
+}
+```
+
+Response:
+
+* If success - `201 Created`: Purchase created successfully
+
+* If error - `400 Bad Request`: Validation error or duplicate purchase entry
+
+* If error - `500 Internal Server Error`: Failed to create a purchase
+
+**Get a purchase**
+   
+Description: This endpoint retrieves a purchase by its ID
+
+URL: `/purchase/<purchase_id>`
+
+Method: GET
+
+Response: 
+
+* If success - `200 OK`: Purchase retrieved successfully
+
+* If error - `404 Not Found`: Purchase not found
+
+**Update a purchase**
+  
+Description: This endpoint updates a purchase's respective information by its ID
+
+URL: `/purchase/<purchase_id>`
+
+Method: PUT
+
+Request body: 
+```{
+  "user_id": "integer",
+  "product_id": "integer",
+  "store_id": "integer",
+  "price": "float",
+  "purchase_date": "string (format: YYYY-MM-DD)",
+  "promotion_id": "integer (optional)"
+}
+```
+
+Response:
+
+* If success - `200 OK`: Purchase updated successfully
+
+* If error - `400 Bad Request`: Validation error
+
+* If error - `404 Not Found`: Purchase not found
+
+* If error - `500 Internal Server Error`: Failed to update purchase
+
+**Delete a purchase**
+   
+Description: This endpoint deletes a purchase by its ID
+
+URL: `/purchase/<purchase_id>`
+
+Method: DELETE
+
+Response:
+
+* If success - `200 OK`: Purchase deleted successfully
+
+* If error - `404 Not Found`: Purchase not found
+
+* If error - `500 Internal Server Error`: Failed to delete purchase
+
+### Promotion Endpoints
+
+**Create a new promotion**
+
+Description: This endpoint allows the creation of a new promotion
+
+URL: `/promotion`
+
+Method: POST
+
+Request body:
+```{
+  "product_id": "integer",
+  "promotion_type": "string",
+  "promotion_discount": "float"
+}
+```
+
+Response:
+
+* If success - `201 Created`: Promotion created successfully
+
+* If error - `400 Bad Request`: Validation error
+
+* If error - `500 Internal Server Error`: Failed to create a promotion
+
+**Get a promotion**
+
+Description: This endpoint retrieves a promotion by its ID
+
+URL: `/promotion/<promotion_id>`
+
+Method: GET
+
+Response:
+
+* If success - `200 OK`: Promotion retrieved successfully
+
+* If error - `404 Not Found`: Promotion not found
+
+**Update a promotion**
+
+Description: This endpoint updates a promotion's respective information by its ID
+
+URL: `/promotion/<promotion_id>`
+
+Method: PUT
+
+Request body:
+```{
+  "product_id": "integer",
+  "promotion_type": "string",
+  "promotion_discount": "float"
+}
+```
+
+Response:
+
+* If success - `200 OK`: Promotion updated successfully
+
+* If error - `400 Bad Request`: Validation error
+
+* If error - `404 Not Found`: Promotion not found
+
+* If error - `500 Internal Server Error`: Failed to update promotion
+
+**Delete a promotion**
+
+Description: This endpoint deletes a promotion by its ID
+
+URL: `/promotion/<promotion_id>`
+
+Method: DELETE
+
+Response:
+
+* If success - `200 OK`: Promotion deleted successfully
+
+* If error - `404 Not Found`: Promotion not found
+
+* If error - `500 Internal Server Error`: Failed to delete promotion
+
+### Store Endpoints
+
+**Create a new store**
+
+Description: This endpoint allows for the creation of a new store
+
+URL: `/store`
+
+Method: POST
+
+Request body: 
+```{
+  "name": "string",
+  "type": "string",
+  "location": "string"
+}
+```
+
+Response: 
+
+* If success - `201 Created`: Store created successfully
+
+* If error - `400 Bad Request`: Validation error or store with the same name already exists
+
+* If error - `500 Internal Server Error`: Failed to create a store
+
+**Get a store**
+
+Description: This endpoint retrieves a store by its ID
+
+URL: `/store/<store_id>`
+
+Method: GET
+
+Response: 
+
+* If success - `200 OK`: Store retrieved successfully
+
+* If error - `404 Not Found`: Store not found
+
+**Update a store**
+
+Description: This endpoint updates a store's respective information by its ID
+
+URL: `/store/<store_id>`
+
+Method: PUT
+
+Request body:
+```{
+  "name": "string",
+  "type": "string",
+  "location": "string"
+}
+```
+
+Response:
+
+* If success - `200 OK`: Store updated successfully
+
+* If error - `400 Bad Request`: Validation error
+
+* If error - `404 Not Found`: Store not found
+
+* If error - `500 Internal Server Error`: Failed to update store
+
+**Delete a store**
+
+Description: This endpoint deletes a store by its ID
+
+URL: `/store/<store_id>`
+
+Method: DELETE
+
+Response:
+
+* If success - `200 OK`: Store deleted successfully
+
+* If error - `404 Not Found`: Store not found
+
+* If error - `500 Internal Server Error`: Failed to delete store
+
+### Alert Endpoints
+
+**Create a new alert**
+
+Description: This endpoint allows for the creation of a new alert
+
+URL: `/alert`
+
+Method: POST
+
+Request body: 
+```{
+  "user_id": "integer",
+  "product_id": "integer",
+  "day_of_week": "string"
+}
+```
+
+Response:
+
+* If success - `201 Created`: Alert created successfully
+
+* If error - `400 Bad Request`: Validation error
+
+* If error - `500 Internal Server Error`: Failed to create an alert
+
+**Get an alert**
+
+Description: This endpoint retrieves an alert by its ID
+
+URL: `/alert/<alert_id>`
+
+Method: GET
+
+Response:
+
+* If success - `200 OK`: Alert retrieved successfully
+
+* If error - `404 Not Found`: Alert not found
+
+**Update an alert**
+
+Description: This endpoint updates an alert's information by its ID
+
+URL: `/alert/<alert_id>`
+
+Method: PUT
+
+Request body:
+```{
+  "user_id": "integer",
+  "product_id": "integer",
+  "day_of_week": "string"
+}
+```
+
+Response:
+
+* If success - `200 OK`: Alert updated successfully
+
+* If error - `400 Bad Request`: Validation error
+
+* If error - `404 Not Found`: Alert not found
+
+* If error - `500 Internal Server Error`: Failed to update alert
+
+**Delete an alert**
+
+Description: This endpoint deletes an alert by its ID
+
+URL: `/alert/<alert_id>`
+
+Method: DELETE
+
+Response:
+
+* If success - `200 OK`: Alert deleted successfully
+
+* If error - `404 Not Found`: Alert not found
+
+* If error - `500 Internal Server Error`: Failed to delete an alert
 
 ## R6. An ERD for your app.
 

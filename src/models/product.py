@@ -16,7 +16,7 @@ class Product(db.Model):
     alerts = db.relationship('Alert', backref='product', lazy=True)
     promotions = db.relationship('Promotion', backref='product', lazy=True)
 
-    def serialise(self):
+    def serialize(self):
         return{
             'id': self.id,
             'name': self.name,
