@@ -1,6 +1,10 @@
 # IshanAcharya_T2A2 - Shopping Diary API Webserver Application
 
+## Introduction
+
 Github Repository - https://github.com/IshanAcharya/T2A2_APIWebServer
+
+Trello Board - https://trello.com/b/ftQCFYV2/t2a2-api-webserver-shopping-diary
 
 ## R1. Identification of the problem you are trying to solve by building this particular app.
 
@@ -37,6 +41,20 @@ By integrating purchase tracking and offering the ability to analyse their spend
 
 ## R3. Why have you chosen this database system. What are the drawbacks compared to others?
 
+Chosen for:
+
+- open source
+- robustness
+- reliability
+- support for complex relationships
+
+
+
+Drawbacks: 
+
+- Complexity vs other database systems
+- Learning curve
+
 
 
 
@@ -44,6 +62,34 @@ By integrating purchase tracking and offering the ability to analyse their spend
 
 
 ## R4. Identify and discuss the key functionalities and benefits of an ORM.
+
+Object Relational Mapping, often known and abbreviated as ORM, is a programming technique used to interact between a program and a database, usually a relational database (FreeCodeCamp, 2024). An ORM tool is a piece of software designed to help object opriented programs to ineract with relational databases (FreeCodeCamp, 2024).
+
+An example of an ORM tool that exists in Python is SQLAlchemy, which was also utilised for the development of this Shopping Diary API. SQLAlchemy is an open-source SQL toolkit and an ORM (Wikipedia, 2024) which simplifies database interactions by allowing developers to abstract database logic into object oriented code. In the case of thi application, between the application and its relational database, postgreSQL.
+
+
+**Key functionalities**
+
+The key functionalities of ORM tools, such as SQLAlchemy, include:
+
+* Generating and managing schemas
+* Data manipulation (CRUD)
+* Mapping objects to tables
+* Relationship management
+* Faster queries
+
+
+**Benefits**
+
+Benefits of using ORM tools, such as SQLAlchemy, include:
+
+
+* Portability
+
+* Maintainability
+
+
+
 
 - On Ed lesson for ORM Pros and Cons
 
@@ -54,86 +100,227 @@ By integrating purchase tracking and offering the ability to analyse their spend
 
 ## R5. Document all endpoints for your API.
 
-Auth
+Auth Endpoints
 
--POST - 
--POST
--GET/POST
+Register
+    POST - /auth/register
 
+Login 
+    POST - /auth/login
 
-Users
-
--POST
--GET
--PUT
--DELETE
+Authenticate
+    GET/POST - /auth/protected
 
 
-Product
+User Endpoints
 
--POST
--GET
--PUT
--DELETE
-
-
-Purchase
-
--POST
--GET
--PUT
--DELETE
+Create User
+    POST - 
+Get User
+    GET - 
+Update User
+    PUT - 
+Delete User
+    DELETE - 
 
 
-Promotion
 
--POST
--GET
--PUT
--DELETE
+Product Endpoints
 
-Store
-
--POST
--GET
--PUT
--DELETE
+Create Product
+    POST - 
+Get Product
+    GET - 
+Update Product
+    PUT - 
+Delete Product
+    DELETE -
 
 
-Alert
+Purchase Endpoints
 
--POST
--GET
--PUT
--DELETE
+Create Purchase
+    POST - 
+Get Purchase
+    GET - 
+Update Purchase
+    PUT - 
+Delete Purchase
+    DELETE -
+
+
+Promotion Endpoints
+
+Create Promotion
+    POST - 
+Get Promotion
+    GET - 
+Update Promotion
+    PUT - 
+Delete Promotion
+    DELETE -
+
+Store Endpoints
+
+Create Store
+    POST - 
+Get Store
+    GET - 
+Update Store
+    PUT - 
+Delete Store
+    DELETE -
+
+Alert Endpoints
+
+Create Alert
+    POST - 
+Get Alert
+    GET - 
+Update Alert
+    PUT - 
+Delete Alert
+    DELETE -
 
 ## R6. An ERD for your app.
 
 ![ERD](docs/ERD.png)
 
-
-
 ## R7. Detail any third party services that your app will use.
 
-Flask, SQLAlchemy, PostgreSQL, Marshmallow, Flask JWT Extended, JSON Web Tokens, Bcrypt, dotenv, psycopg2
+The Shopping Diary application utilises multiple third party services to deliver it's core functions. These include:
 
-
-
-
-
+| Third Party Service | Details of service |
+| ------------------- | ------------------ |
+| bcrypt              | Hashing library for secure password storage |
+| dotenv              | Library for loading environment variables from application's .env file |
+| Flask               | Python micro web framework for building applications |
+| Flask JWT Extended  | Extension for Flask to work with JSON Web Tokens (JWT) to provide authentication and authorisation |
+| Marshmallow         | Flask extension library that allows serialization and deserialization of data |
+| PostgreSQL          | Power open-source relational database system that stores the application's data |
+| psycopg2            | PostgreSQL adapter that allows the application to interact with PostgreSQL database |
+| SQLAlchemy          | Object-Relational Mapping (ORM) toolkit which allows for the program to interact with PostgreSQL through Python objects |
 
 
 ## R8. Describe your project models in terms of the relationships they have with each other
 
+For a database-driven application such as this Shopping Diary API Application, it's important to establish relationships between the different models within the project in order to organise and manage the data within it effectively. Models for this Shopping Diary API application are separated into 6 different models: `user`, `product`, `promotion`, `purchase`, `store`, and `alert`. 
+
+For this application, relationship between the 6 models were established using SQLAlchemy, which is a powerful Object-Relational Mapper (ORM) for Python (Wikipedia, 2024). SQLAlchemy was utilised as it provided a declarative way of defining the relationships between the models, which simplified database interactions.
+
+Parent-Child relationships are established using SQLAlchemy through the use of foreign keys and relationship attributes. To estbalish relationships between models in SQLAlchemy, the `db.relationship` method was utilised. This method allowed for attributes to be created on the parent model, which allowed access to related objects as well as attributes on the child model to access the parent object.
+
+In this application, all the models have the following parent-child relatiosnhips established:
+
+* **User as parent** - Users are set as the parent entities, as they can initiate interactions within the system by making purchases and setting alerts
+
+* **Purchase, Alert as children** - Purchases and alerts are child entities associated with users. Each purchase or alert is linked to a specific user, which establishes a parent-child relationship
+
+* **Product, Store, Promotion as independent entities** - Products, stores, and promotions can be considered as independent entities which are not directly linked to users. They can, however, still have relationships with purchases, alerts, or with each other.
+
+For example, 
+
+`user`
+
+```class User(db.Model):
+# Define table name for the model
+    __tablename__ = 'users'
+
+    # Define columns for the model
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(60), unique=True, nullable=False)
 
 
+# Define relationships with other models
+    purchases = db.relationship('Purchase', backref='buyer', lazy=True)
+    alerts = db.relationship('Alert', backref='owner', lazy=True)
 
+In the `user` model above, the relationship with the `purchase` and `alert` models are established through the `db.relationship` attribute. This attribute specifies the relatiosnhip between the `user` model(parent) and the `purchase` and `alert` models (children). The `backref` parameter in `db.relationship` defines a reference from the child models, `purchase` and `alert`, back to the parent model `user`, which enables easy navigation between related objects. Through this parent-child relationship, a `user` object can easily access all purchases made by that user through the `purchases` attribute. In the application, the `db.relationshp` method is used different on different models based on the cardonality and directionality of the relationships.
 
+In another example, 
+
+`purchase`
+
+```class Purchase(db.Model):
+    # Define table name for the model
+    __tablename__ = 'purchases'
+
+    # Define columns for the model
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    store_id = db.Column(db.Integer, db.ForeignKey('stores.id'), nullable=False)
+    promotion_id = db.Column(db.Integer, db.ForeignKey('promotions.id'))
+    price = db.Column(db.Float, nullable=False)
+    purchase_date = db.Column(db.DateTime, nullable=False)
+
+    # Define relationship with other models
+    users = db.relationship('User', backref='purchases')
+    products = db.relationship('Product', backref='purchases')
+    stores = db.relationship('Store', backref='purchases')
+    promotions = db.relationship('Promotion', backref='purchases')
+```
+
+In the above `purchase` model, the relationships with `user`, `product`, `store` and `promotion` models are established using the same `db.relationship` method and the `backref` parameter.
+
+By establishing the relationships, it allowed for:
+
+* **Data consistency** - Relationships between the models ensured that the data remained consistent across the 6 different models. E.g. In the application, associating purchases with users ensured that each purchase was attributed to a specific user
+
+* **Data integrity** - Relationships between the models enforced constraints and rules that maintained the integrity of the data within the application. E.g. By ensuring that each purchase is associated with an existing product, it helps prevent orphaned records
+
+* **Efficent data access** - Relationships between the models enable efficient querying and retrieval of related data. Instead of having to manually link records, establishing the relationships allow easy navigation between associated objects. 
+
+Using SQLAchemy to establish relationships between models in this application ensured data consistency, integrity, and efficient data access. By understanding and defining these relationships between the 6 models, it created a robust application to handle complex data interactions efficiently and effectively. 
 
 ## R9. Discuss the database relations to be implemented in your application.
 
 
+**User Model**
 
+`user`
+
+```class User(db.Model):
+# Define table name for the model
+    __tablename__ = 'users'
+
+    # Define columns for the model
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(60), unique=True, nullable=False)
+
+
+# Define relationships with other models
+    purchases = db.relationship('Purchase', backref='buyer', lazy=True)
+    alerts = db.relationship('Alert', backref='owner', lazy=True)
+```
+
+
+**Product Model**
+
+`product`
+
+
+**Promotion Model**
+
+`promotion`
+
+**Purchase Model**
+
+`purchase`
+
+**Store Model**
+
+`store`
+
+**Alert Model**
+
+`alert`
+
+then explain relationships between each model (one-to-many relationships, one-to-one)
 
 
 
@@ -143,9 +330,46 @@ Flask, SQLAlchemy, PostgreSQL, Marshmallow, Flask JWT Extended, JSON Web Tokens,
 
 ## R10. Describe the way tasks are allocated and tracked in your project.
 
+Trello Board - https://trello.com/b/ftQCFYV2/t2a2-api-webserver-shopping-diary
+
+### Software Development Plan
+
+- Use of Trello
+- Kanban style board (to-do, in progress, review, completed)
+- Project separated into different activities (activity 1, activity 2, activity 3, activity 4)
+- Project milestones and deadlines 
+
+### Project Milestones & Deadlines
+
+I separated the deliverables of my project to 5 different activities to help separate my tasks, and provide a clear timeline as to when I needed to complete each section of the project. I separated these activities based on their categories (and labelled as such) including 'project planning', 'project coding & reviewing', 'project documentation', and 'project submission'. 
+
+These activities included:
+
+- Insert screenshot of Activity 1
+- Insert screenshot of Activity 2
+- Insert screenshot of Activity 3
+- Insert screenshot of Activity 4
+
+- Labels used to separate into different tasks
+    - Project planning
+    - Project coding & reviewing
+        - Controllers
+        - Models and schemas
+    - Project documentation
+    - Project submission
+- Each task for project broken down into cards and categorised accordingly using labels
+- Each card had checklists of sub-tasks 
+- Workflow established where I had milestones/due dates in one column, my current outstanding tasks, what I was working on, what needed to be reviewed after being completed, and once a card/task passed through all of that, it ended up in the completed pile
+
 
 
 
 
 
 # Reference
+
+https://en.wikipedia.org/wiki/Object–relational_mapping
+
+https://en.wikipedia.org/wiki/SQLAlchemy
+
+https://www.freecodecamp.org/news/what-is-an-orm-the-meaning-of-object-relational-mapping-database-tools/
