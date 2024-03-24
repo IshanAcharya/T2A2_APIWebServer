@@ -1074,7 +1074,7 @@ Trello Board - https://trello.com/b/ftQCFYV2/t2a2-api-webserver-shopping-diary
 
 ### Software Development Plan
 
-![TrelloBoard]
+![TrelloBoard](docs/TrelloBoard.png)
 
 For this project, I adopted a simple Kanban style project management approach where I wanted to list all my outstanding tasks in a 'to-do/backlog' list, which would then show me all the tasks I had outstanding that I needed to action. This list would contain card pertaining to different components of the progress, with checklists within each card showing it's respective sub-tasks. 
 
@@ -1086,39 +1086,55 @@ Once I had finished reviewing a particular task's code snippet and was satisfied
 
 Throughout the duration of this project, I also utilised an 'Issues log' list, where I would log issues that I faced with this project that either affected my deadlines, or impacted the work that I was doing.
 
-To uniquely identify each particular tasks and the type of task it was, I assigned labels to each card for each task.
+To uniquely identify each particular tasks and the type of task it was, I assigned labels to all cards in the board.
 
-- Insert screenshot of labels
-
+![TrelloLabels](docs/TrelloLabels.png)
 
 ### Project Milestones & Deadlines
 
 Once I identified all the tasks required to complete my project, I categorised all the tasks and deliverables of my project into 4 different activities under a list titled 'Project Milestones & Deadlines'.
 
-- Insert screenshot of Project Milestones & Deadlines list-
+![ProjectMilestonesDeadlines](docs/ProjectMilestonesDeadlines.png)
 
 By categorising the tasks into their respective activities, it allowed me to establish a clear board and timeline as to when I needed to complete each section of the project. This also allowed me to assign a deadline for each component, which gave me a reference as to how much time I would need to allocate for each activity in order to be able to complete the project on time.
 
 ### Activity 1 - Project Planning
 
-- Insert screenshot of project planning card
-    - Insert screenshot of task cards and their checklists containing sub-tasks
+![ActivityOne](docs/ActivityOne.png)
+
+I categorised all tasks that were related to planning the overall project plan into Activity 1 - Project Planning. These contained tasks that were essential in getting the project up and running, including tasks such as ideating the project, creating the ERD, selecting a database system, etting up the folder structure, setting up the initial git commit, and creating a software development plan. Each of these tasks were assigned with due dates to cover key areas of the project planning phase.
+
+![ProjectPlanningERD](docs/ProjectPlanningERD.png)
+
+Each of the aforementioned tasks, such as the creation of the application ERD in the screenshot above, were also assigned individual cards containing sub-tasks for me to action with their own due dates assigned to them. This allowed me to keep track of my progress and identify any potential lag indicators. These were also labelled accordingly to show that they belonged to the Project Planning activity.
 
 ### Activity 2 - Project Coding & Reviewing
 
-- Insert screenshot of project coding & reviewing card
-    - Insert screenshot of models task cards and their checklists containing sub-tasks
-    - Insert screenshot of controllers task cards and their checklists containing sub-tasks
+![ActivityTwo](/docs/ActivityTwo.png)
+
+I categorised all tasks that were related to the coding and reviewing component of the project into Activity 2 - Project Coding & Reviewing. These contained tasks that were essential in the development of this Shopping Diary API Application, such as coding the database models, coding the controllers, coding the overall main logic of the application, and reviewing the code for all areas of the application. Each of these tasks were assigned with due dates to cover key areas of the project coding and reviewing phase. 
+
+![MainLogicCard](/docs/MainLogicCard.png)
+![ProductModelCard](/docs/ProductModelCard.png)
+![PromotionControllerCard](/docs/PromotionControllerCard.png)
+
+Each of the aforementioned tasks, such as the coding of the main logic card, coding of one of the database model cards, and the coding of one of the controller cards in the screenshot above, were also assigned individual cards containing sub-tasks for me to action with their own due dates assigned to them. This allowed me to keep track of my coding progress and make adjustments to focus on different areas of the code development. These were also labelled accordingly to show that they belonged to the separate areas of the Project Coding & Reviewing activity.
 
 ### Activity 3 - Project Documentation
 
-- Insert screenshot of project documentation card
-    - Insert screenshot of documentation task cards and their checklists containing sub-tasks
+![ActivityThree](docs/ActivityThree.png)
+
+I categorised all tasks that were related to completing the README documentation requirements into Activity 3 - Project Documentation. These contained tasks that were essential in completing the README documentation requirements that formed part of the project brief and contained 10 sets of documentation requirement tasks. Each of these tasks were assigned with due dates to cover different the documentation requirements of the project.
+
+![DocumentationCard](docs/DocumentationCard.png)
+
+Each of the aforementioned tasks, such as the task for documentation requirement R10 in the screenshot above, were also assigned individual cards containing sub-tasks for me to action with their own due dates assigned to them (note: in this screenshot my trial of Trello premium had run out, so I was unable to assign the due dates for just this card). This allowed me to keep track of my README documentation requirements that formed as part of my project requirements and allowed me to monitor my progress. These were also labelled accordingly to show that they belonged to the Project Docuemntation activity.
 
 ### Activity 4 - Project Submission
 
-- Insert screenshot of project submission card
-    - Insert screenshot of submission task card and their checklists containing sub-tasks
+![ActivityFour](docs/ActivityFour.png)
+
+I created Ac
 
 
 # Reference
