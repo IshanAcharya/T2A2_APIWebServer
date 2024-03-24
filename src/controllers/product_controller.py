@@ -68,7 +68,7 @@ def update_product(product_id):
             product.brand = data.get('brand', product.brand)
             product.category = data.get('category', product.category)
 
-            # Commit session
+            # Commit changes to database and return messages
             db.session.commit()
             return jsonify({'message': 'Product updated successfully'}), 200
         except ValidationError as ve:
@@ -89,7 +89,7 @@ def delete_product(product_id):
     product = Product.query.get(product_id)
     if product:
         try:
-            # Delete product from database
+            # Delete product from database and commit changes
             db.session.delete(product)
             db.session.commit()
             return jsonify({'message': 'Product deleted successfully'}), 200

@@ -29,7 +29,7 @@ def register_user():
         if not password:
             raise ValidationError('Password is required')
 
-        # Conduct check for whether user already exists
+        # Conduct check by querying database for user with specified ID to check whether user already exists
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             return jsonify({'message': 'User already exists!'}), 400
@@ -39,10 +39,11 @@ def register_user():
         # Create new user
         new_user = User(username=username, email=email, password=hashed_password)
 
-        # Add new user to database 
+        # Add new user to database and commit changes
         db.session.add(new_user)
         db.session.commit()
 
+        # Return messages 
         return jsonify({'message': 'User registered successfully!'}), 201
     except ValidationError as e:
         return jsonify({'message': 'Validation Error', 'error': str(e)}), 400

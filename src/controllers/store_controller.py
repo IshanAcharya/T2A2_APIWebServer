@@ -91,7 +91,7 @@ def delete_store(store_id):
     store = Store.query.get(store_id)
     if store:
         try:
-            # Delete store from database
+            # Delete store from database and commit changes
             db.session.delete(store)
             db.session.commit()
             # Return success message

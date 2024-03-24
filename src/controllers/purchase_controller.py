@@ -102,7 +102,7 @@ def delete_purchase(purchase_id):
     purchase = Purchase.query.get(purchase_id)
     if purchase:
         try:
-            # Delete purchase from the database
+            # Delete purchase from the database and commit changes
             db.session.delete(purchase)
             db.session.commit()
             return jsonify({'message': 'Purchase deleted successfully'}), 200

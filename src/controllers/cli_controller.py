@@ -14,21 +14,21 @@ db_commands = Blueprint('db', __name__)
 # Initilaise database
 @db_commands.cli.command('init')
 def initialise_database():
-    db.drop_all()
-    db.create_all()
+    db.drop_all() # Drop all tables
+    db.create_all() # Create all tables
     print("Flask application has been initialised")
 
 
 # Create tables in database 
 @db_commands.cli.command('create')
 def create_tables():
-    db.create_all()
+    db.create_all() # Create all tables
     print("Tables created succesfully")
 
 # Drop tables from database
 @db_commands.cli.command('drop')
 def drop_tables():
-    db.drop_all()
+    db.drop_all() # Drop all tables
     print("Tables dropped successfully")
 
 # Seed tables into database
@@ -49,7 +49,7 @@ def seed_tables():
         )
     ]
     
-    db.session.add_all(users)
+    db.session.add_all(users) # Add users to session
 
     # Seed data for products
     products = [
@@ -65,7 +65,7 @@ def seed_tables():
         )
     ]
 
-    db.session.add_all(products)
+    db.session.add_all(products) # Add products to session
 
     # Seed data for promotions
     promotions = [
@@ -79,7 +79,7 @@ def seed_tables():
         )
     ]
 
-    db.session.add_all(promotions)
+    db.session.add_all(promotions) # Add promotions to session
 
     # Seed data for stores     
     stores = [
@@ -95,7 +95,7 @@ def seed_tables():
         )
     ]
 
-    db.session.add_all(stores)
+    db.session.add_all(stores) # Add stores to session
 
     # Seed data for purchases
     purchases = [
@@ -117,7 +117,7 @@ def seed_tables():
         )
     ]
 
-    db.session.add_all(purchases)
+    db.session.add_all(purchases) # Add purchases to session
 
     # Seed data for alerts
     alerts = [
@@ -133,9 +133,10 @@ def seed_tables():
         )
     ]
 
-    db.session.add_all(alerts)
+    db.session.add_all(alerts) # Add alerts to session
 
     # Commit tables into database
     db.session.commit()
 
+    # Return success message
     print("Tables seeded successfully")
