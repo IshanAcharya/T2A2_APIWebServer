@@ -67,40 +67,45 @@ Despite these drawbacks, PostgreSQL still remains as the suitable choice for thi
 
 ## R4. Identify and discuss the key functionalities and benefits of an ORM.
 
-Object Relational Mapping, often known and abbreviated as ORM, is a programming technique used to interact between a program and a database, usually a relational database (FreeCodeCamp, 2024). An ORM tool is a piece of software designed to help object opriented programs to ineract with relational databases (FreeCodeCamp, 2024).
+Object Relational Mapping, often known and abbreviated as ORM, is a programming technique used to interact between a program and a database, usually a relational database (FreeCodeCamp, 2024). An ORM tool is a piece of software designed to help object oriented programs to interact with relational databases (FreeCodeCamp, 2024).
 
-An example of an ORM tool that exists in Python is SQLAlchemy, which was also utilised for the development of this Shopping Diary API. SQLAlchemy is an open-source SQL toolkit and an ORM (Wikipedia, 2024) which simplifies database interactions by allowing developers to abstract database logic into object oriented code. In the case of thi application, between the application and its relational database, postgreSQL.
-
+An example of an ORM tool that exists in Python is SQLAlchemy, which was also utilised for the development of this Shopping Diary API. SQLAlchemy is an open-source SQL toolkit and an ORM (Wikipedia, 2024) which simplifies database interactions by allowing developers to abstract database logic into object oriented code. In the case of this application, between the application and its relational database, postgreSQL.
 
 **Key functionalities**
 
 The key functionalities of ORM tools, such as SQLAlchemy, include:
 
-* Generating and managing schemas
-* Data manipulation (CRUD)
-* Mapping objects to tables
-* Relationship management
-* Faster queries
+* **Generating and managing schemas** - ORM tools automate the creation and management of database schemas, which elimnate the need for manual schemas. The ORM takes classes that have been defined in the code and translates the classes into corresponding database tables and relationships.
 
+In this application, model classes in `user.py`, `product.py`, `promotion.py`, `purchase.py`, `store.py`, and `alert.py` directly define the structure of the database tables through SQLAlchemy
+
+* **Data manipulation (CRUD)** - ORM tools allow robust support to carry out Create, Read, Update, and Delete (CRUD) operations, which simplify database interactions. These operations can be performed by using familiar object-oriented syntax, which saves times and takes the difficulty away from using SQL queries.
+
+In this application, examples of this include:
+
+* Create: In the `create_user` route in the `user_controller.py` file, `new_user= User(**user_data)` and `db.session.add(new_user)` create a database entry directly from a `user` object
+
+* Read: In the `product_controller.py` file, when retrieving a product, code such as `product = Product.query.get(product_id)` show the ORM translating an object query into SQL
+
+* Update: In the `purchase_controller.py` file, modifying a purchase using `purchase.price = new_price` shows the ORM updating the database after using `db.session.commit()`
+
+* Delete: In the `store_controller.py` file, deleting an entity with `db.session.delete(store)` shows the ORM deleting an object.
+
+* **Mapping objects to tables** - ORM facilitates the mapping of object-oriented entities to relational database table, which enables seamless data manipulation. Each class in the code represents a table in the database, and instances of the classes correspond to rows in the table
+
+* **Relationship management** - ORM tools provide easy methods to define and manage relationships between database entities, allowing for relationships such as `One-to-One`, `One-to-Many`, and `Many-to-Many` relationships to be established. This allows for easy handling of complex data models, and ensures data integrity within the database
+
+* **Transaction management** - Using ORM tools streamlines transaction management, which is essential in ensuring data consistency and integrity when performing multiple database operations at once. In the application, SQLAlchemy's `db.session` sessions contain a series of database interactions. `db.session.commit()` confirms a set of changes, whilst `db.session.rollback()` ensures that the changes either all succeed or are entirely undone. This allows for data integrity by protecting against incomplete updates which could promise the accuracy of the data.
 
 **Benefits**
 
 Benefits of using ORM tools, such as SQLAlchemy, include:
 
+* **Productivity** - Utilising ORM tools allows for developers to improve their productivity by reducing the time needed to write repetitive SQL queries and having to manage database interactions manually. By utilising ORM tools to carry out these functions, the saved time can be used elsewhere to develop and progress the application development
 
-* Portability
+* **Portability** - Should a developer need to change the database management system (DBMS) for their application, ORM tools can allow for an easy transition from one DBMS to another without needing to rewrite large portions of code pertaining to database interactions. This is done by ORM tools putting database interactions into platform indepedent code, which allows it to be portable
 
-* Maintainability
-
-
-
-
-- On Ed lesson for ORM Pros and Cons
-
-
-
-
-
+* **Code Maintainability** - The use of ORM promotes code maintainability by encapsulating database logic within the application's codebase. Changes to database schemas or queries can be implemented through code modifications, which reduce the risk of errors. Utilising ORM tools also allow for the application's codebase to be modular and cleaner, which allows it to be maintainable. 
 
 ## R5. Document all endpoints for your API.
 
