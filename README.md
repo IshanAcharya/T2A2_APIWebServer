@@ -715,7 +715,7 @@ Response:
 
 This application's Entity Relationship Diagram (ERD) is as follows:
 
-![ERD](docs/ERD.png)
+![ERD](docs/ShoppingDiaryERD.png)
 
 1. **User Entity**
 
@@ -894,11 +894,11 @@ The `user` model represents individuals who use the application and is central t
 Relationships:
 
 * One-to-Many relationship with `purchase`: Each user can make multiple purchases, established through the `purchases` relationship
-    * Cardinality: One-to-Many (one user can have multiple purchases)
+    * Cardinality: One-to-Many (one user can have zero or multiple purchases)
     * Directionality: User (One) -> Purchase (Many)
 
 * One-to-Many relationship with `alert`: Each user can set up multiple alerts, established through the `alerts` relationship
-    * Cardinality: One-to-Many (one user can set up multiple alerts)
+    * Cardinality: One-to-Many (one user can set up zero or multiple alerts)
     * Directionality: User (One) -> Alert (Many).
 
 **Product Model**
