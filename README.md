@@ -1128,22 +1128,20 @@ I categorised all tasks that were related to completing the README documentation
 
 ![DocumentationCard](docs/DocumentationCard.png)
 
-Each of the aforementioned tasks, such as the task for documentation requirement R10 in the screenshot above, were also assigned individual cards containing sub-tasks for me to action with their own due dates assigned to them (note: in this screenshot my trial of Trello premium had run out, so I was unable to assign the due dates for just this card). This allowed me to keep track of my README documentation requirements that formed as part of my project requirements and allowed me to monitor my progress. These were also labelled accordingly to show that they belonged to the Project Docuemntation activity.
+Each of the aforementioned tasks, such as the task for documentation requirement R10 in the screenshot above, were also assigned individual cards containing sub-tasks for me to action with their own due dates assigned to them (note: in this screenshot my trial of Trello premium had run out, so I was unable to assign the due dates for just this card). This allowed me to keep track of my README documentation requirements that formed as part of my project requirements and allowed me to monitor my progress. These were also labelled accordingly to show that they belonged to the Project Documentation activity.
 
 ### Activity 4 - Project Submission
 
 ![ActivityFour](docs/ActivityFour.png)
 
-I created Ac
+I created Activity 4 - Project Submission to include sub-tasks which provided me with an overview of the completion of Activity 1, Activity 2 and Activity 3. This gave me a high level view of my project progress and allowed me to quantify what percentage of the project I had completed throughout my project development plan.
 
+# References
 
-# Reference
+FreeCodeCamp 2024, *What Is an ORM - The Meaning of Object Relational Mapping Database Tools*, viewed 23 March 2024, https://www.freecodecamp.org/news/what-is-an-orm-the-meaning-of-object-relational-mapping-database-tools/
 
-https://en.wikipedia.org/wiki/Object–relational_mapping
+Google Cloud 2024, *PostgreSQL vs SQL Server: What are the key differences?*, viewed 23 March 2024, https://cloud.google.com/learn/postgresql-vs-sql 
 
-https://en.wikipedia.org/wiki/SQLAlchemy
+Wikipedia 2024, *Object-Relational Mapping*, viewed 23 March 2024, https://en.wikipedia.org/wiki/Object–relational_mapping
 
-https://www.freecodecamp.org/news/what-is-an-orm-the-meaning-of-object-relational-mapping-database-tools/
-
-
-Google Cloud 2024, PostgreSQL vs SQL Server: What are the key differences?, viewed 29 February 2024, https://cloud.google.com/learn/postgresql-vs-sql
+Wikipedia 2024, *SQLAlchemy*, viewed 23 March 2024, https://en.wikipedia.org/wiki/SQLAlchemy
