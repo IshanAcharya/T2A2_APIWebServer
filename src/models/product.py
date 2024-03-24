@@ -6,16 +6,17 @@ class Product(db.Model):
     __tablename__ = 'products'
 
     # Define columns for the model
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    brand = db.Column(db.String(100))
-    category = db.Column(db.String(100))
+    id = db.Column(db.Integer, primary_key=True) # Primary Key for the product
+    name = db.Column(db.String(100), nullable=False) # Name of the product
+    brand = db.Column(db.String(100)), # Brand of the product
+    category = db.Column(db.String(100)) # Category of the product
 
     # Define relationships with other models
-    purchases = db.relationship('Purchase', backref='product', lazy=True)
-    alerts = db.relationship('Alert', backref='product', lazy=True)
-    promotions = db.relationship('Promotion', backref='product', lazy=True)
+    purchases = db.relationship('Purchase', backref='product', lazy=True) # Relationship with the Purchase model, linking products to their purchases 
+    alerts = db.relationship('Alert', backref='product', lazy=True) # Relationship with the Alert model, linking products to their alerts
+    promotions = db.relationship('Promotion', backref='product', lazy=True) # Relationship with the Promotion model, linking products to their promotions
 
+    # Method to serialize Product object
     def serialize(self):
         return{
             'id': self.id,
@@ -23,11 +24,13 @@ class Product(db.Model):
             'brand': self.brand,
             'category': self.category
         }
-    
-class ProductSchema(Schema):
-    id = fields.Int(dump_only=True)
-    name = fields.Str(required=True)
-    brand = fields.Str(required=True)
-    category = fields.Str(required=True)
 
+# Schema for serialization/deserialization of Product objects   
+class ProductSchema(Schema):
+    id = fields.Int(dump_only=True) # ID field is read only
+    name = fields.Str(required=True) # Product name is required
+    brand = fields.Str(required=True) # Product brand is required
+    category = fields.Str(required=True) # Product category is required
+
+# Schema for serialization/deserialization of Product objects
 product_schema = ProductSchema()
