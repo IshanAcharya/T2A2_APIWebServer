@@ -1068,36 +1068,57 @@ Each of the relationships established above have specific cardinality and direct
 
 ## R10. Describe the way tasks are allocated and tracked in your project.
 
+I created my software development plan by utilising Trello to create a project board for this project, which allowed me to carry out the project management of my software development plan from inception to completion.
+
 Trello Board - https://trello.com/b/ftQCFYV2/t2a2-api-webserver-shopping-diary
 
 ### Software Development Plan
 
-- Use of Trello
-- Kanban style board (to-do, in progress, review, completed)
-- Project separated into different activities (activity 1, activity 2, activity 3, activity 4)
-- Project milestones and deadlines 
+![TrelloBoard]
+
+For this project, I adopted a simple Kanban style project management approach where I wanted to list all my outstanding tasks in a 'to-do/backlog' list, which would then show me all the tasks I had outstanding that I needed to action. This list would contain card pertaining to different components of the progress, with checklists within each card showing it's respective sub-tasks. 
+
+Once I began working on certain tasks of the project, I would move that particular task's respective card onto the 'In progress' list, where it would show me a list of all the tasks that I was currently working on. This allowed me to narrow my focus on these particular tasks and establish a scope to ensure that I wasn't scattered on other areas of the project all at once.
+
+After I finished certain tasks, I would move that particular task's card onto the 'Review' list, where it would stay there until I reviewed the code again to check for any typos or errors. This provided me with a list of all the tasks that needed me to double-check for quality control.
+
+Once I had finished reviewing a particular task's code snippet and was satisfied with it, I would then move it to the 'Completed' list, where a task has been fully completed. This allowed me to view how much overall progress I was making on my project at given moment, and adjust my workload to account for my progress or lack of progress. 
+
+Throughout the duration of this project, I also utilised an 'Issues log' list, where I would log issues that I faced with this project that either affected my deadlines, or impacted the work that I was doing.
+
+To uniquely identify each particular tasks and the type of task it was, I assigned labels to each card for each task.
+
+- Insert screenshot of labels
+
 
 ### Project Milestones & Deadlines
 
-I separated the deliverables of my project to 5 different activities to help separate my tasks, and provide a clear timeline as to when I needed to complete each section of the project. I separated these activities based on their categories (and labelled as such) including 'project planning', 'project coding & reviewing', 'project documentation', and 'project submission'. 
+Once I identified all the tasks required to complete my project, I categorised all the tasks and deliverables of my project into 4 different activities under a list titled 'Project Milestones & Deadlines'.
 
-These activities included:
+- Insert screenshot of Project Milestones & Deadlines list-
 
-- Insert screenshot of Activity 1
-- Insert screenshot of Activity 2
-- Insert screenshot of Activity 3
-- Insert screenshot of Activity 4
+By categorising the tasks into their respective activities, it allowed me to establish a clear board and timeline as to when I needed to complete each section of the project. This also allowed me to assign a deadline for each component, which gave me a reference as to how much time I would need to allocate for each activity in order to be able to complete the project on time.
 
-- Labels used to separate into different tasks
-    - Project planning
-    - Project coding & reviewing
-        - Controllers
-        - Models and schemas
-    - Project documentation
-    - Project submission
-- Each task for project broken down into cards and categorised accordingly using labels
-- Each card had checklists of sub-tasks 
-- Workflow established where I had milestones/due dates in one column, my current outstanding tasks, what I was working on, what needed to be reviewed after being completed, and once a card/task passed through all of that, it ended up in the completed pile
+### Activity 1 - Project Planning
+
+- Insert screenshot of project planning card
+    - Insert screenshot of task cards and their checklists containing sub-tasks
+
+### Activity 2 - Project Coding & Reviewing
+
+- Insert screenshot of project coding & reviewing card
+    - Insert screenshot of models task cards and their checklists containing sub-tasks
+    - Insert screenshot of controllers task cards and their checklists containing sub-tasks
+
+### Activity 3 - Project Documentation
+
+- Insert screenshot of project documentation card
+    - Insert screenshot of documentation task cards and their checklists containing sub-tasks
+
+### Activity 4 - Project Submission
+
+- Insert screenshot of project submission card
+    - Insert screenshot of submission task card and their checklists containing sub-tasks
 
 
 # Reference
