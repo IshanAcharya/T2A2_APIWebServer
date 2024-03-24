@@ -8,7 +8,7 @@ Trello Board - https://trello.com/b/ftQCFYV2/t2a2-api-webserver-shopping-diary
 
 The Shopping Diary API Application is designed to streamline and enhance shopping experiences for all types of shoppers. It offers a seamless platform where users can effortlessly document their purchases, analyse their spending habits, and help understand their spending patterns to make better informed decisions when shopping. Whether it's to track daily shopping trips or analyse long-term shopping trends, this application simplifies the process and empowers users to manage their shopping with efficiency and clarity. 
 
-## R1. Identification of the problem you are trying to solve by building this particular app.
+## R1. Identification of the problem you are trying to solve by building this particular app
 
 In the current Australian economic climate, where the cost of living is currently at an all time high, it has become more prominent than ever for people to start budgeting and reviewing their expenses to implement cost saving measures to maintain their way of life, or to just 'survive'. For simple budgeting, there are a huge variety of budgeting applications or even a simple spreadsheet that can allow people to manage their finances. However, when it comes to shopping and analysing one's own personal shopping habits, there lays a few pain points there that prohibit people from conducting reviews into their shopping patterns and habits which limit their ability to improve their shopping behaviours and thus improve their finances.
 
@@ -23,7 +23,6 @@ Some of these pain points include:
 * **Existing applications that are specific to retailers** - Different retailers have their own applications which allow shoppers to conduct online purchases and view their past orders, purchases and even view their online receipts. However due to the saturated market in the grocery and retail sectors, it becomes too difficult for shoppers to attempt in analysing their shopping behaviour and purchasing patterns due to them needing to review this across the countless number of different applications they would need from each retailer to review their respective purchases from their respective applications.
 
 This Shopping Diary API application aims to address all of the aforementioned pain points by providing shoppers with a comprehensive platform for tracking purchases, analysing spending patterns, and allowing them to set alerts for promotions or sales. By providing these robust features to engage in their own purchase management and purchase analysis, this application seeks to empower users to make informed shopping decisions to optimise their spending habits effectively, and in turn help them save money towards their budgets and finances.
-
 
 ## R2. Why is it a problem that needs solving?
 
@@ -65,7 +64,7 @@ While PostgreSQL offers numerous advantages for this application, it also has a 
 
 Despite these drawbacks, PostgreSQL still remains as the suitable choice for this Shopping Diary API Application due to its robustness, reliability, and support for complex relationships, which align closely with the application's requirement for data integrity and relational data modeling.
 
-## R4. Identify and discuss the key functionalities and benefits of an ORM.
+## R4. Identify and discuss the key functionalities and benefits of an ORM
 
 Object Relational Mapping, often known and abbreviated as ORM, is a programming technique used to interact between a program and a database, usually a relational database (FreeCodeCamp, 2024). An ORM tool is a piece of software designed to help object oriented programs to interact with relational databases (FreeCodeCamp, 2024).
 
@@ -107,7 +106,7 @@ Benefits of using ORM tools, such as SQLAlchemy, include:
 
 * **Code Maintainability** - The use of ORM promotes code maintainability by encapsulating database logic within the application's codebase. Changes to database schemas or queries can be implemented through code modifications, which reduce the risk of errors. Utilising ORM tools also allow for the application's codebase to be modular and cleaner, which allows it to be maintainable. 
 
-## R5. Document all endpoints for your API.
+## R5. Document all endpoints for your API
 
 ### Auth Endpoints
 
@@ -711,7 +710,7 @@ Response:
 
 * If error - `500 Internal Server Error`: Failed to delete an alert
 
-## R6. An ERD for your app.
+## R6. An ERD for your app
 
 This application's Entity Relationship Diagram (ERD) is as follows:
 
@@ -775,7 +774,7 @@ This application's Entity Relationship Diagram (ERD) is as follows:
 | DayOfWeek | The day of the week for which an alert is set for |
 
 
-## R7. Detail any third party services that your app will use.
+## R7. Detail any third party services that your app will use
 
 The Shopping Diary application utilises multiple third party services to deliver it's core functions. These include:
 
@@ -865,7 +864,7 @@ By establishing the relationships, it allowed for:
 
 Using SQLAchemy to establish relationships between models in this application ensured data consistency, integrity, and efficient data access. By understanding and defining these relationships between the 6 models, it created a robust application to handle complex data interactions efficiently and effectively. 
 
-## R9. Discuss the database relations to be implemented in your application.
+## R9. Discuss the database relations to be implemented in your application
 
 During the planning stage of this Shopping Diary API Application, it was essential to first create an Entity Relationship Database that would allow me to visualise how I wanted the relationships to work with the 6 different models within this application. By doing this, it allowed me to establish how users, products, promotions, purchases, stores and alerts would interact with each other. 
 
@@ -1066,7 +1065,7 @@ Relationships:
 
 Each of the relationships established above have specific cardinality and directionality, which indicates how the entities within the database are related to each other and how they interact within the application. By doing this, it contributes towards ensuring data consistency and data integrity within the database of the application.
 
-## R10. Describe the way tasks are allocated and tracked in your project.
+## R10. Describe the way tasks are allocated and tracked in your project
 
 I created my software development plan by utilising Trello to create a project board for this project, which allowed me to carry out the project management of my software development plan from inception to completion.
 
