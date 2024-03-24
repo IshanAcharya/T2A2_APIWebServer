@@ -926,7 +926,7 @@ The `product` model represents items available for purchase in the application. 
 Relationships:
 
 * One-to-Many relationship with Purchase: Each product can be associated with multiple purchases, established through the `purchases` relationship
-    * Cardinality: One-to-Many (One product can be associated with multiple purchases)
+    * Cardinality: One-to-Many (One or many products can be associated with one purchase)
     * Directionality: Product (One) -> Purchase (Many)
 
 * One-to-Many relationship with Alert: Each product can be associated with multiple alerts, established through the `alerts` relationship
