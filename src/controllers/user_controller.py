@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from flask_bcrypt import bcrypt
 from src import db
 from src.models.user import User, UserSchema
 from marshmallow import ValidationError
@@ -22,7 +23,14 @@ def create_user():
         existing_user = User.query.filter_by(email=user_data['email']).first()
         if existing_user:
             return jsonify({'message': 'User already exists!'}), 400
-    
+
+        # Hash password
+        hashed_password = bcrypt.generate_password_hash(user_data['password']).decode('utf-8')
+
+        # Update user_data with hashed password
+        user_data['password'] = hashed_password
+
+
         # Create new user object with deserialised data
         new_user = User(**user_data)
 
@@ -74,6 +82,10 @@ def update_user(user_id):
     
         # Deserialise data using schema
         user_data = user_schema.load(request.json)
+
+        # Only hash password if it was included in update data
+        if 'password' in user_data:
+            user_data['password'] = bcrypt.generate_password_hash(user_data['password']).decode('utf-8')
 
         # Update user object 
         for key, value in user_data.items():

@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from src import db
 from src.models.user import User
-from bcrypt import hashpw, gensalt, checkpw
+from flask_bcrypt import bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from marshmallow import ValidationError
 
@@ -53,9 +53,7 @@ def register_user():
 
 # Function to generate password using bcrypt
 def generate_password_hash(password):
-    salt = gensalt()
-    hashed_password = hashpw(password.encode('utf-8'), salt)
-    return hashed_password.decode('utf-8')
+    return bcrypt.generate_password_hash(password).decode('utf-8')
 
 # Function to log in a user
 # http://localhost:8080/auth/login - POST
@@ -75,7 +73,7 @@ def login_user():
     user = User.query.filter_by(email=email).first()
 
     # Conduct check for whether the user already exists and if the password is correct
-    if not user or not checkpw(password.encode('utf-8'), (user.password, password)):
+    if not user or not bcrypt.check_password_hash(user.password, password):
         return jsonify({'message': 'Invalid email or password!'}), 401
 
     # Generate access token using Flask JWT Extended
